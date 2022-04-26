@@ -29,12 +29,10 @@ const isAlphaNumeric = function isAlphaNumeric(str) {
 }
 
 const checkValidUsername = function checkValidUsername(str) {
-    //const alphanumeric = new RegExp('/^[a-z0-9]+$/i');
 
     if (typeof str != 'string') throw `Error: Username must be a string.`;
     if (str.trim().length != str.length) throw 'Error: Username must not contain spaces.';
     if (str.trim().length < 4) throw `Error: Username must be at least 4 characters long.`;
-    //if (!alphanumeric.test(str)) 
     if (!isAlphaNumeric(str)) throw 'Error: Username must only contain alphanumeric characters.';
 }
 
@@ -63,7 +61,7 @@ router.get('/', async (req, res) => {
             res.render('users/login');
         }
     } catch (e) {
-        return res.status(400).json(e); // NOT SURE IF CORRECT ERROR
+        return res.status(400).json(e)
     }
 });
 
@@ -76,7 +74,7 @@ router.get('/signup', async (req, res) => {
             res.render('users/signup');
         }
     } catch (e) {
-        return res.status(400).json(e); // NOT SURE IF CORRECT ERROR
+        return res.status(400).json(e); 
     }
 });
 
@@ -85,7 +83,6 @@ router.post('/signup', async (req, res) => {
     try {
         checkValidInput(req.body.username, req.body.password);
     } catch (e) {
-        //console.log(e)
         return res.render('users/signup', {error: e, errorExists: true});
     }
 
@@ -109,7 +106,6 @@ router.post('/login', async (req, res) => {
 
     try {
         const check = await usersData.checkUser(req.body.username, req.body.password);
-        //console.log(check)
         if (check.authenticated == true) {
             req.session.user = req.body.username;
             res.cookie("AuthCookie", {user: req.body.username});
@@ -118,14 +114,12 @@ router.post('/login', async (req, res) => {
             res.render('users/login', {error: e, errorExists: true});
         }
     } catch (e) {
-        //console.log(e)
-        res.render('users/login', {error: e, errorExists: true}); // NOT SURE IF CORRECT ERROR
+        res.render('users/login', {error: e, errorExists: true}); 
     }
 });
 
 // GET /private
 router.get('/private', async (req, res) => {
-    //console.log(req.session.user)
     res.render('users/private', {username: req.session.user});
 });
 
