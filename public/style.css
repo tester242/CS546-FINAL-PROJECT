@@ -1,0 +1,49 @@
+body {
+    background: #F8B195;
+    background: -webkit-linear-gradient(right, #F4D6D6, #F6F5E1);
+    background: -moz-linear-gradient(right, #F4D6D6, #F6F5E1);
+    background: -o-linear-gradient(right, #F4D6D6, #F6F5E1);
+    background: linear-gradient(left, #F4D6D6, #F6F5E1);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: monospace;
+}
+
+main {
+    max-width: 90%;
+    margin: auto;
+}
+
+#error {
+	color: red;
+	font-weight: bold;
+}
+
+#myForm {
+    color: white;
+    background-color: DarkSalmon;
+    padding: 6px;
+}
+
+#username {
+    background-color: #FFFFBF;
+    padding: 6px;
+}
+
+#password {
+    background-color: #FFFFBF;
+    padding: 6px;
+}
+
+#usernameDisplay {
+    background-color: #FFFFBF;
+    font-size: 40px;
+    padding: 6px;
+}
+
+footer {
+    text-align: center;
+    padding: 6px;
+    background-color: DarkSalmon;
+    color: white;
+}

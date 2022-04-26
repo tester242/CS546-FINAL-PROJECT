@@ -1,0 +1,15 @@
+{{#if errorExists}}
+    <p id="error">{{error}}</p>
+{{/if}}
+
+<form method="POST" id="signup-form">
+    <label id="username" for="username">Username:</label><br>
+    <input type="text" id="username" name="username"><br><br>
+    <label id="password" for="password">Password:</label><br>
+    <input type="password" id="password" name="password"><br><br>
+    <button type="submit">Signup</button><br><br><br>
+</form>
+
+<footer>
+    <a href="/">Already have an account? Click here to log-in</a>
+</footer>
