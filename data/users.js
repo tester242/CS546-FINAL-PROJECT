@@ -61,7 +61,6 @@ async function createUser(username, password) {
 
     const userCollection = await users();
     const hash = await bcrypt.hash(password, saltRounds);
-    //console.log(hash);
 
     username = username.toLowerCase();
     const user = await userCollection.findOne({username: username});

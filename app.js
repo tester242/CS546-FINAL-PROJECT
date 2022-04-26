@@ -23,7 +23,7 @@ app.set('view engine', 'handlebars');
 
 app.use(
     session({
-        name: 'Lab10Session',
+        name: 'ProjectSession',
         secret: 'some secret string!',
         resave: false,
         saveUninitialized: true
@@ -31,7 +31,6 @@ app.use(
 );
 
 app.use('/private', (req, res, next) => {
-    //console.log(req.session.id);
     if (!req.session.user) {
         return res.redirect('/');
     } else {
