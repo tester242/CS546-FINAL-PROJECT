@@ -8,15 +8,20 @@ function validate(att, field) {
     if (typeof att !== 'string') throw `Error: ${field} must be a string.`;
     att = att.trim();
     if (att.length == 0) {
-        if (field === 'id') throw 'Error: userID cannot be an empty string.';
-        if (field === 'title') throw 'Error: Please provide a title.';
-        if (field === 'description') throw 'Error: Please provide a description.';
+        if (field === 'id') throw `Error: ${field} cannot be an empty string.`;
+        if (field === 'title'||field === 'description') throw `Error: Please provide a ${field}`;
     }
     if (field === 'id' && !ObjectId.isValid(att)) throw 'Error: userID is not a valid Object ID.';
 }
 
 function validateRequest(id, title, desc) {
     validate(id, 'id');
+    // validate(name, 'name');
+    // validate(email, 'email');
+    // validate(address, 'address');
+    // validate(city, 'city');
+    // validate(state, 'state');
+    // validate(zip, 'zip');
     validate(title, 'title');
     validate(desc, 'description');
 }
@@ -42,6 +47,33 @@ module.exports = {
             description: description
         }
 
-        // const insertRequest
+        const insertRequest = await requestCollection.insertOne(newRequest);
+        if (insertRequest.insertedCount === 0) throw 'Error: Could not add new request.';
+        return { requestInserted: true };
+    },
+
+    async get(requestID) {
+        validate(requestID, 'id');
+        
+        var tempID = ObjectId(requestID.trim());
+
+        const requestCollection = await requests();
+
+        const request = await requestCollection.findOne({ _id: tempID });
+        if (!request) throw 'Error: No request with that ID.';
+
+        return request;
+    },
+
+    async remove(requestID) {
+        validate(requestID, 'id');
+
+        var tempID = ObjectId(requestID.trim());
+
+        const requestCollection = await requests();
+        const removeRequest = await requestCollection.deleteOne({ _id: tempID });
+        if (removeRequest.deleteCount === 0) throw 'Error: Failed to remove request with that ID.';
+
+        return { requestRemoved: true };
     }
 }
