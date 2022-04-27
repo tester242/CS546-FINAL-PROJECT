@@ -2,6 +2,8 @@ const mongoCollections = require('../config/mongoCollections');
 const artworks = mongoCollections.artworks;
 const { ObjectId } = require('mongodb');
 
+
+
 module.exports = {
   // async createArtwork(name, tags, postedDate, price, artImage, artVideo, favorites, overallRating, description, reviews){
     
