@@ -1,0 +1,11 @@
+ <dl>
+    {{#each artId}}
+        <img alt={{this.name}} src={{this.artImage}}> 
+        <dt>Name<dt>
+        <dd>{{this.name}}<dd>
+        <dt>Price</dt>
+        <dd>{{this.price}}</dd>        
+    {{/each}}
+</dl>
+
+<p>Subtotal: {{subtotal}}<p>

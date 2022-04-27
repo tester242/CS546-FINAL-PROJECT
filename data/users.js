@@ -1,7 +1,6 @@
-/* Name: Danielle Faustino
+/* Name: Anton Danylenko, Danielle Faustino, Kyle Henderson, Nicholas Whitt
    Pledge: I pledge my honor that I have abided by the Stevens Honor System.
-   Assignment: CS 546 Lab 10
-   Notes: Data users.js
+   Assignment: CS 546 Group 17 Final Project
 */
 
 const bcrypt = require('bcrypt');
@@ -35,7 +34,6 @@ const checkValidUsername = function checkValidUsername(str) {
     if (typeof str != 'string') throw `Error: Username must be a string.`;
     if (str.trim().length != str.length) throw 'Error: Username must not contain spaces.';
     if (str.trim().length < 4) throw `Error: Username must be at least 4 characters long.`;
-    //if (!alphanumeric.test(str)) 
     if (!isAlphaNumeric(str)) throw 'Error: Username must only contain alphanumeric characters.';
 }
 
@@ -68,7 +66,8 @@ async function createUser(username, password) {
 
     let newUser = {
         username: username,
-        password: hash
+        password: hash,
+        userLevel: 1
     }
 
     const insertUser = await userCollection.insertOne(newUser);
@@ -85,19 +84,49 @@ async function checkUser(username, password) {
 
     username = username.toLowerCase();
     const user = await userCollection.findOne({username: username});
-    if (!user) throw 'Either the username or password is invalid';
+    if (!user) throw 'Error: Either the username or password is invalid.';
 
     let compareToMatch = false;
     compareToMatch = await bcrypt.compare(password, user.password);
     
     if (compareToMatch) {
-        return {authenticated: true};
+        if (!user.userLevel) {
+            return {authenticated: true,
+                    admin: true};
+        } else {
+            return {authenticated: true,
+                    admin: false};
+        }
     } else {
-        throw 'Either the username or password is invalid'
+        throw 'Error: Either the username or password is invalid.'
     }
 }
 
+async function updateUserLevel(username) {
+    checkValidUsername(username);
 
+    const userCollection = await users();
+
+    username = username.toLowerCase();
+    const user = await userCollection.findOne({username: username});
+    if (!user) throw 'Error: Either the username or password is invalid.';
+
+    let newLevel;
+    if (!user.userLevel) {
+        newLevel = 1;
+    } else {
+        newLevel = 0;
+    }
+
+    const updatedUser = await userCollection.updateOne(
+        { _id: user._id },
+        { $set: { userLevel: newLevel }}
+    )
+
+    if (updatedUser.modifiedCount === 0) {
+        throw 'Error: Could not update user level successfully.';
+    }
+}
  
  
 module.exports = {

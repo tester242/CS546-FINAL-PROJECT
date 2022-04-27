@@ -1,7 +1,6 @@
-/* Name: Danielle Faustino
+/* Name: Anton Danylenko, Danielle Faustino, Kyle Henderson, Nicholas Whitt
    Pledge: I pledge my honor that I have abided by the Stevens Honor System.
-   Assignment: CS 546 Lab 10
-   Notes: Routes users.js
+   Assignment: CS 546 Group 17 Final Project
 */
 
 const express = require('express');

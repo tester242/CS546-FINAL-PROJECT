@@ -1,0 +1,18 @@
+<article>
+    <header>
+        <h1>About Maggie</h1>
+        <p>*Insert a little bio by Maggie*</p>
+    </header>
+</article>
+
+
+{{#each artworks}}
+    <div class="responsive">
+        <div class="gallery">
+            <a target="_blank" href="img_5terre.jpg">
+            <img src={{artImage}} alt="{{name}}">
+            </a>
+            <div class="title">{{name}}</div>
+        </div>
+    </div>
+{{/each}}

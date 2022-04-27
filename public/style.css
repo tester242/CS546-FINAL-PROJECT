@@ -47,3 +47,63 @@ footer {
     background-color: DarkSalmon;
     color: white;
 }
+html,
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #64a6bd;
+  }
+.topnav {
+    display: flex;
+    background-color: #90a8c3;
+    overflow: hidden;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding: .2%;
+}
+
+
+.topnav a {
+    float: left;
+    color: black;
+    text-align: center;
+    padding: .9% 3%;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+
+.topnav a:hover {
+    background-color: #64a6bd;
+    color: white;
+    transition-duration: 500ms;
+}
+
+
+.topnav a.active {
+    background-color: #ada7c9;
+    color: black;
+}
+
+
+/* Artwork Gallery */
+div.gallery {
+    margin: 5px;
+    border: 1px solid #ccc;
+    float: left;
+    width: 180px;
+}
+
+div.gallery:hover {
+    border: 1px solid #777;
+}
+
+div.gallery img {
+    width: 100%;
+    height: auto;
+}
+
+div.title {
+    padding: 15px;
+    text-align: center;
+}

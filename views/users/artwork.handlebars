@@ -1,0 +1,51 @@
+<article>
+    <h1>{{name}}</h1>
+    <img alt={{name}} src={{artImage}}> 
+    {{#if hasVideo}}
+        <video width="400" controls>
+            <source src="artVideo" type="video/mp4">
+        </video>
+    {{/if}}
+    <dl> 
+        <dt>Date Posted</dt> 
+        <dd>{{postedDate}}</dd><br>
+        <dt>Description</dt> 
+        <dd>{{description}}</dd><br>
+        <dt>Price</dt> 
+        <dd>{{price}}</dd><br>
+        <dt>Favorites</dt> 
+        <dd>{{favorites}}</dd><br>
+        <dt>Rating</dt> 
+        <dd>{{overallRating}}</dd><br>
+        <dt>Tags</dt>
+        <dd> 
+            {{#if tags}}
+            <ul> 
+                {{#each tags}}
+                    <li>{{this}}</li>
+                {{/each}}
+            </ul> 
+            {{else}}
+                No Reviews
+            {{/if}}   
+        </dd> 
+        <dt>Reviews</dt> 
+        <dd> 
+            {{#if reviews}}
+            <ul> 
+                {{#each reviews}}
+                    <li>{{this.name}}</li> 
+                    <li>{{this.rating}}</li> 
+                    <li>{{this.review}}</li> 
+                {{/each}}
+            </ul> 
+            {{else}}
+                No Reviews
+            {{/if}}   
+        </dd> 
+    </dl>
+</article>
+
+<footer>
+    <a href="/artworks">Back to All Artworks</a>
+</footer>
