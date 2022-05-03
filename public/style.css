@@ -1,9 +1,5 @@
 body {
-    background: #F8B195;
-    background: -webkit-linear-gradient(right, #F4D6D6, #F6F5E1);
-    background: -moz-linear-gradient(right, #F4D6D6, #F6F5E1);
-    background: -o-linear-gradient(right, #F4D6D6, #F6F5E1);
-    background: linear-gradient(left, #F4D6D6, #F6F5E1);
+    background: #EEE2DF;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-family: monospace;
@@ -14,40 +10,55 @@ main {
     margin: auto;
 }
 
-#error {
-	color: red;
-	font-weight: bold;
+
+/* TAGS */
+h1 {
+    background-color: #C89F9C;
+    font-size: 20px;
+    padding: 6px;
 }
 
-#myForm {
+form {
     color: white;
-    background-color: DarkSalmon;
-    padding: 6px;
-}
-
-#username {
-    background-color: #FFFFBF;
-    padding: 6px;
-}
-
-#password {
-    background-color: #FFFFBF;
-    padding: 6px;
-}
-
-#usernameDisplay {
-    background-color: #FFFFBF;
-    font-size: 40px;
+    background-color: #B36A5E;
     padding: 6px;
 }
 
 footer {
     text-align: center;
     padding: 6px;
-    background-color: DarkSalmon;
+    background-color: #C97C5D;
     color: white;
 }
-html,
+
+
+/* IDs */
+#error {
+	color: red;
+	font-weight: bold;
+}
+
+#username {
+    background-color: #EED7C5;
+    padding: 6px;
+}
+
+#password {
+    background-color: #EED7C5;
+    padding: 6px;
+}
+
+
+
+/* CLASSES */
+.artworkTitle {
+    background-color: #C89F9C;
+    font-size: 20px;
+    padding: 6px;
+}
+
+
+/* html,
 body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
@@ -83,27 +94,61 @@ body {
 .topnav a.active {
     background-color: #ada7c9;
     color: black;
-}
+} */
 
 
 /* Artwork Gallery */
-div.gallery {
-    margin: 5px;
-    border: 1px solid #ccc;
+.gallery {
+    overflow: hidden;
+    margin: 10px;
+    max-width: 1500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.icon {
     float: left;
-    width: 180px;
+    position: relative;
+    width: 20%;
+    padding-bottom: 20%;
 }
 
-div.gallery:hover {
-    border: 1px solid #777;
+.iconInner {
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    top: 10px;
+    bottom: 10px;
+    overflow: hidden;
 }
+.iconInner img { width: 100% }
 
-div.gallery img {
-    width: 100%;
-    height: auto;
+
+@media only screen and (max-width:480px) { 
+    /* Smartphone view: 1 tile */
+    .box {
+        width: 100%;
+        padding-bottom: 100%;
+    }
 }
-
-div.title {
-    padding: 15px;
-    text-align: center;
+@media only screen and (max-width:650px) and (min-width:481px) { 
+    /* Tablet view: 2 tiles */
+    .box {
+        width: 50%;
+        padding-bottom: 50%;
+    }
+}
+@media only screen and (max-width:1050px) and (min-width:651px) { 
+    /* Small desktop / iPad view: 3 tiles */
+    .box {
+        width: 33.3%;
+        padding-bottom: 33.3%;
+    }
+}
+@media only screen and (max-width:1290px) and (min-width:1051px) { 
+    /* Medium desktop view: 4 tiles */
+    .box {
+        width: 25%;
+        padding-bottom: 25%;
+    }
 }
