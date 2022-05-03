@@ -1,0 +1,35 @@
+<article>
+    <p>These are all of the commissions requests.</p><br><br>
+    {{#each requests}}
+        <div class="request">
+            <dl> 
+                <dt>Name</dt> 
+                <dd>{{name}}</dd><br>
+                <dt>Email</dt> 
+                <dd>{{email}}</dd><br>
+                <dt>Address</dt> 
+                <dd>{{address}}</dd><br>
+                <dt>City</dt> 
+                <dd>{{city}}</dd><br>
+                <dt>State</dt> 
+                <dd>{{state}}</dd><br>
+                <dt>Zip</dt> 
+                <dd>{{zip}}</dd><br>
+                <dt>Commission Title</dt> 
+                <dd>{{title}}</dd><br>
+                <dt>Request Date</dt> 
+                <dd>{{commisionDate}}</dd><br>
+                <dt>Request Description</dt> 
+                <dd>{{description}}</dd><br>
+            </dl>
+        </div>
+    {{/each}}
+</article>
+
+<footer>
+    <a href="/requests">Back to Top</a>
+    <a href="/artworks">Back to All Artworks</a>
+    {{#if loggedIn}}
+        <a href="/logout">Logout</a>
+    {{/if}}
+</footer>
