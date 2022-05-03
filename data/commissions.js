@@ -63,6 +63,12 @@ module.exports = {
         if (removeCommission.deleteCount === 0) throw 'Error: Failed to remove commission with that ID.';
 
         return { commissionRemoved: true };
-    }
-    // async update(commissionID, )
+    },
+    
+    // async update(commissionID, field, val) {
+        // validate field; check if field is price or status 
+        //  - (should not update title or desc of commission)
+        // if field is price, update price
+        // if field is status, update status
+    // }
 }
