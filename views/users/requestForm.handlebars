@@ -1,0 +1,31 @@
+<form method="POST" id="request-form" action="/requests">
+    <label id="name" for="name">Name:</label><br>
+    <input type="text" id="name" name="name"><br><br>
+
+    <label id="email" for="email">Email:</label><br>
+    <input type="text" id="email" name="email"><br><br>
+
+    <label id="address" for="address">Address:</label><br>
+    <input type="text" id="address" name="address"><br><br>
+
+    <label id="city" for="city">City:</label><br>
+    <input type="text" id="city" name="city"><br><br>
+
+    <label id="state" for="state">State:</label><br>
+    <input type="text" id="state" name="state"><br><br>
+
+    <label id="zip" for="zip">Zip:</label><br>
+    <input type="number" id="zip" name="zip"><br><br>
+
+    <label id="title" for="title">Artwork Title:</label><br>
+    <input type="text" id="title" name="title"><br><br>
+
+    <label id="description" for="description">Description:</label><br>
+    <input type="text" id="description" name="description"><br><br>
+
+    {{#if errorExists}}
+        <p id="error">{{error}}</p>
+    {{/if}}
+
+    <button type="submit">Submit</button><br><br><br>
+</form>

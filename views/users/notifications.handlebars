@@ -1,0 +1,17 @@
+<article>
+    {{#each notifications}}
+        <div class="notifications">
+            <dl> 
+                <dt>Date</dt> 
+                <dd>{{this.date}}</dd><br>
+                <dt>Message</dt> 
+                <dd>{{this.message}}</dd><br>
+            </dl>
+        </div>
+    {{/each}}
+</article>
+
+<footer>
+    <a href="/notifications">Back to Top</a>
+    <a href="/artworks">Back to All Artworks</a>
+</footer>

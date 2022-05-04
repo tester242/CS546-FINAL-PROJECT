@@ -9,8 +9,8 @@
 {{#each artworks}}
     <div class="icon">
         <div class="iconInner">
-            <a href="/artwork"><img src={{artImage}} alt="{{name}}"></a>
-            <div class="artworkTitle">{{name}}</div>
+            <a href="/artwork"><img src={{this.artImage}} alt="{{this.name}}"></a>
+            <div class="artworkTitle">{{this.name}}</div>
         </div>
     </div>
 {{/each}}

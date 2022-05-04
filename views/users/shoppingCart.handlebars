@@ -1,11 +1,19 @@
+{{#if errorExists}}
+    <p id="error">{{error}}</p>
+{{/if}}
+
  <dl>
-    {{#each artId}}
-        <img alt={{this.name}} src={{this.artImage}}> 
-        <dt>Name<dt>
-        <dd>{{this.name}}<dd>
-        <dt>Price</dt>
-        <dd>{{this.price}}</dd>        
-    {{/each}}
+    {{#if cartNotEmpty}}
+        {{#each artworks}}
+            <img alt={{this.name}} src={{this.artImage}}> 
+            <dt>Name<dt>
+            <dd>{{this.name}}<dd>
+            <dt>Price</dt>
+            <dd>{{this.price}}</dd>        
+        {{/each}}
+    {{else}}
+        Cart Is Empty
+    {{/if}}
 </dl>
 
 <p>Subtotal: {{subtotal}}<p>

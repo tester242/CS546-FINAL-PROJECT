@@ -1,0 +1,36 @@
+{{#if errorExists}}
+    <p id="error">{{error}}</p>
+{{/if}}
+
+<article>
+    <p>These are all of the artwork orders.</p><br><br>
+    {{#each orders}}
+        <div class="orders">
+            <dl> 
+                <dt>Name</dt> 
+                <dd>{{this.userId.name}}</dd><br>
+                <dt>Artworks</dt> 
+                    {{#each this.cartId.artId}}
+                        <li>{{this}}</li>
+                    {{/each}}
+                <dt>Corresponding Artwork Formats</dt> 
+                    {{#each this.cartId.format}}
+                        <li>{{this}}</li>
+                    {{/each}}
+                <dt>Total</dt> 
+                <dd>{{this.total}}</dd><br>
+                <dt>Address</dt> 
+                <dd>{{this.address}}</dd><br>
+            </dl>
+
+            <form method="POST" id="orders-form" action="/orders">
+                <button type="button">Update Status</button><br><br><br>
+            </form>
+        </div>
+    {{/each}}
+</article>
+
+<footer>
+    <a href="/orders">Back to Top</a>
+    <a href="/artworks">Back to All Artworks</a>
+</footer>

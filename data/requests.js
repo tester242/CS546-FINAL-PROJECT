@@ -3,7 +3,12 @@ const requests = mongoCollections.requests;
 const users = mongoCollections.users;
 const { ObjectId } = require('mongodb');
 
+const requestFields = ['id', 'title', 'desc'];
+
 function validate(att, field) {
+    if (!field) throw 'Error: Must provide a field to check.';
+    if (typeof field !== 'string') throw 'Error: Must provide a string for field.';
+    if (!(field in requestFields)) throw `Error: ${field} is an invalid field.`;
     if (!att) throw `Error: ${field} needs to be a valid value.`;
     if (typeof att !== 'string') throw `Error: ${field} must be a string.`;
     att = att.trim();
@@ -16,12 +21,6 @@ function validate(att, field) {
 
 function validateRequest(id, title, desc) {
     validate(id, 'id');
-    // validate(name, 'name');
-    // validate(email, 'email');
-    // validate(address, 'address');
-    // validate(city, 'city');
-    // validate(state, 'state');
-    // validate(zip, 'zip');
     validate(title, 'title');
     validate(desc, 'description');
 }

@@ -102,6 +102,18 @@ async function checkUser(username, password) {
     }
 }
 
+async function checkUserLevel(username) {
+    checkValidUsername(username);
+
+    const userCollection = await users();
+
+    username = username.toLowerCase();
+    const user = await userCollection.findOne({ username: username });
+    if (!user) throw 'Error: User not found.';
+
+    return user.userLevel;
+}
+
 async function updateUserLevel(username) {
     checkValidUsername(username);
 
@@ -109,7 +121,7 @@ async function updateUserLevel(username) {
 
     username = username.toLowerCase();
     const user = await userCollection.findOne({username: username});
-    if (!user) throw 'Error: Either the username or password is invalid.';
+    if (!user) throw 'Error: User not found.';
 
     let newLevel;
     if (!user.userLevel) {
@@ -134,5 +146,7 @@ module.exports = {
     lastName: "Faustino", 
     studentId: "10447762",
     createUser,
-    checkUser
+    checkUser,
+    checkUserLevel,
+    updateUserLevel
 };

@@ -48,10 +48,18 @@ footer {
     padding: 6px;
 }
 
+#usernameDisplay {
+    color: white;
+    background-color: #C97C5D;
+    font-size: 40px;
+    padding: 6px;
+}
+
 
 
 /* CLASSES */
 .artworkTitle {
+    color: white;
     background-color: #C89F9C;
     font-size: 20px;
     padding: 6px;

@@ -1,15 +1,23 @@
+{{#if errorExists}}
+    <p id="error">{{error}}</p>
+{{/if}}
+
 <article>
-    <p>These are all of the commission requests accepted by Maggie.</p><br><br>
+    <p>These are all of the active commission requests accepted by Maggie.</p><br><br>
     {{#each commissions}}
         <div class="commission">
             <dl> 
                 <dt>Commission ID</dt> 
-                <dd>{{commissionId}}</dd><br>
+                <dd>{{this.commissionId}}</dd><br>
                 <dt>Status</dt> 
-                <dd>{{status}}</dd><br>
+                <dd>{{this.status}}</dd><br>
                 <dt>Price</dt> 
-                <dd>{{price}}</dd><br>
+                <dd>{{this.price}}</dd><br><br>
             </dl>
+
+            <form method="POST" id="commissions-form" action="/commissions">
+                <button type="button">Update Status</button><br><br><br>
+            </form>
         </div>
     {{/each}}
 </article>
@@ -18,7 +26,4 @@
 <footer>
     <a href="/commissions">Back to Top</a>
     <a href="/artworks">Back to All Artworks</a>
-    {{#if loggedIn}}
-        <a href="/logout">Logout</a>
-    {{/if}}
 </footer>

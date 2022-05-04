@@ -1,6 +1,8 @@
 /* Name: Anton Danylenko, Danielle Faustino, Kyle Henderson, Nicholas Whitt
    Pledge: I pledge my honor that I have abided by the Stevens Honor System.
    Assignment: CS 546 Group 17 Final Project
+   This page will contain an outline of the users information, including their requests
+   and commissions, their orders
 */
 
 const express = require('express');
@@ -117,7 +119,7 @@ router.post('/login', async (req, res) => {
     }
 });
 
-// GET /private
+// GET profile page
 router.get('/private', async (req, res) => {
     res.render('users/private', {username: req.session.user});
 });

@@ -3,24 +3,33 @@ const commissions = mongoCollections.commissions;
 const requests = mongoCollections.requests;
 const { ObjectId } = require('mongodb');
 
+const commissionFields = ['id', 'price'];
+
 function validate(att, field) {
+    if (!field) throw 'Error: Must provide a field to check.';
+    if (typeof field !== 'string') throw 'Error: Must provide a string for field.';
+    if (!(field in requestFields)) throw `Error: ${field} is an invalid field.`;
     if (!att) throw `Error: ${field} needs to be a valid value.`;
     if (field === 'id') {
         if (typeof att !== 'string') throw `Error: ${field} must be a string.`;
         att = att.trim();
-        if (att.length == 0) {
-            if (field === 'id') throw `Error: ${field} cannot be an empty string.`;
-        }
-        if (!ObjectId.isValid(att)) throw 'Error: userID is not a valid Object ID.';
+        if (att.length == 0) throw `Error: ${field} cannot be an empty string.`;
+        if (!ObjectId.isValid(att)) throw 'Error: commissionID is not a valid Object ID.';
     }
     if (field === 'price') {
         if (typeof att !== 'number') throw `Error: ${field} must be a number.`;
+        if (att < 0) throw `Error: ${field} cannot be less than 0.`;
     }
+}
+
+function validateCommission(request, price) {
+    validate(request, 'id');
+    validate(price, 'price');
 }
 
 module.exports = {
     async createCommission(requestID, price) {
-        validate(requestID, 'id');
+        validateCommission(requestID, price);
 
         var tempID = ObjectId(requestID.trim());
         var newPrice = price.toFixed(2);
@@ -65,10 +74,36 @@ module.exports = {
         return { commissionRemoved: true };
     },
     
-    // async update(commissionID, field, val) {
-        // validate field; check if field is price or status 
-        //  - (should not update title or desc of commission)
-        // if field is price, update price
-        // if field is status, update status
-    // }
+    async update(commissionID, field, val) {
+        validate(commissionID, 'id');
+        const commissionCollection = await commissions();
+        const commission = this.get(commissionID);
+        if (!field) throw 'Error: Must provide a field.';
+        if (!val) throw `Error: Must provide a value to update ${field}.`
+        if (field === 'price') {
+            if (typeof val !== 'number') throw 'Error: Price must be a number.';
+            if (val < 0) throw 'Error: Price cannot be negative.';
+            val = val.toFixed(2);
+            const updatedCommission = await commissionCollection.updateOne(
+                { _id: commission._id },
+                { $set: { price: val }}
+            )
+
+            if (updatedCommission.modifiedCount === 0) {
+                throw 'Error: Could not update price successfully.';
+            }
+        }
+        if (field === 'status') {
+            if (typeof val !== 'string') throw 'Error: Status must be a string.';
+            if (val.trim().length === 0) throw 'Error: String cannot be empty.';
+            const updatedCommission = await commissionCollection.updateOne(
+                { _id: commission._id },
+                { $set: { status: val }}
+            )
+
+            if (updatedCommission.modifiedCount === 0) {
+                throw 'Error: Could not update price successfully.';
+            }
+        }
+    }
 }

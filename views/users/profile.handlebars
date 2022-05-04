@@ -1,0 +1,86 @@
+<article>
+    <p id="usernameDisplay">{{username}}</p><br><br>
+
+    <dl> 
+        <dt>First Name</dt> 
+        <dd>{{firstName}}</dd><br>
+        <dt>Last Name</dt> 
+        <dd>{{lastName}}</dd><br>
+        <dt>Email</dt> 
+        <dd>{{email}}</dd><br>
+        <dt>Pronouns</dt> 
+        <dd>{{pronouns}}</dd><br>
+        <dt>Age</dt> 
+        <dd>{{age}}</dd><br>
+        <dt>City</dt> 
+        <dd>{{city}}</dd><br>
+        <dt>State</dt> 
+        <dd>{{state}}</dd><br>
+
+        {{#if isAdmin}}
+            <dt>Favorites</dt> 
+            <dd>{{favoritesCount}} Favorited</dd><br>
+            <dt>Favorited Art</dt>
+            <dd> 
+                {{#if favoritedArt}}
+                <ul> 
+                    {{#each favoritedArt}}
+                        <li>{{this.name}}</li>
+                        <li><img alt={{this.name}} src={{this.artImage}}></li>
+                    {{/each}}
+                </ul> 
+                {{else}}
+                    No Favorites
+                {{/if}}   
+            </dd> 
+
+            <dt>Orders</dt> 
+            <dd> 
+                {{#if orders}}
+                <ul> 
+                    {{#each orders}}
+                        <li>{{this.cartId}}</li>
+                        <li>{{this.total}}</li>
+                        <li>{{this.address}}</li>
+                    {{/each}}
+                </ul> 
+                {{else}}
+                    No orders
+                {{/if}}   
+            </dd> 
+
+            <dt>Pending Commission Requests</dt> 
+            <dd> 
+                {{#if requests}}
+                <ul> 
+                    {{#each requests}}
+                        <li>{{this.title}}</li>
+                    {{/each}}
+                </ul> 
+                {{else}}
+                    No pending requests
+                {{/if}}   
+            </dd> 
+
+            <dt>Active Commissions</dt> 
+            <dd> 
+                {{#if commissions}}
+                <ul> 
+                    {{#each commissions}}
+                        <li>{{this.commissionID.title}}</li>
+                        <li>{{this.price}}</li>
+                        <li>{{this.status}}</li>
+                    {{/each}}
+                </ul> 
+                {{else}}
+                    No commissions
+                {{/if}}   
+            </dd> 
+        {{/if}}
+    </dl>
+</article>
+
+
+<footer>
+    <a href="/logout">Logout</a>
+</footer>
