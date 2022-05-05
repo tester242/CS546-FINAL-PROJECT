@@ -23,10 +23,10 @@ router.get('/shoppingcart', async (req, res) => {
     }
     let cartNotEmpty = artThumbnails==[];
 
-    res.render('shoppingCart', {cartNotEmpty: cartNotEmpty, artworks: artThumbnails, subtotal: cart["subtotal"]});
+    res.render('users/shoppingCart', {cartNotEmpty: cartNotEmpty, artworks: artThumbnails, subtotal: cart["subtotal"]});
   } catch (e) {
     res.status(404);
-    res.render('shoppingcart', {title: "404 Error", error: e});
+    res.render('users/shoppingcart', {title: "404 Error", error: e});
   }
 });
 

@@ -5,14 +5,15 @@
 
 const userRoutes = require('./users');
 const artRoutes = require('./artworks');
-const requestRoutes = require('./requests');
-const commissionRoutes = require('./commissions');
+// const requestRoutes = require('./requests');
+// const commissionRoutes = require('./commissions');
+// const ordersRoutes = require('./orders');
+// const shoppingCartRoutes = require('./shoppingCart');
 
 const constructorMethod = (app) => {
     app.use('/', userRoutes);
     app.use('/artwork', artRoutes);
-    app.use('/requests', requestRoutes);
-    app.use('/commissions', commissionRoutes);
+    app.use('/artworks', artRoutes);
 
     app.use('*', (req, res) => {
         res.sendStatus(404);

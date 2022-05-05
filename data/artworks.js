@@ -115,8 +115,15 @@ module.exports = {
       }
     }
     throw new Error('Could not find artwork with given id');
+  },
+
+  async getAllArtworks(){
+    const artCollection = await artworks();
+    const artList = await artCollection.find({}).toArray();
+    if (artList){
+      return artList;
+    }
+    throw new Error('Could not get all artworks');
   }
 
 }
-
-module.exports = exportedMethods;
