@@ -5,15 +5,20 @@
     </header>
 </article>
 
+<h1>Artwork Gallery</h1>
 <div class="gallery">
-{{#each artworks}}
-    <div class="icon">
-        <div class="iconInner">
-            <a href="/artwork"><img src={{this.artImage}} alt="{{this.name}}"></a>
-            <div class="artworkTitle">{{this.name}}</div>
+  {{#if artworks}}
+    {{#each artworks}}
+        <div class="icon">
+            <div class="iconInner">
+                <a href="/artwork"><img src={{this.artImage}} alt={{this.name}}></a>
+                <div class="artworkTitle">{{this.name}}</div>
+            </div>
         </div>
-    </div>
-{{/each}}
+    {{/each}}
+  {{else}}
+    <p>No Artworks Available</p>
+  {{/if}}
 </div>
 
 <footer>

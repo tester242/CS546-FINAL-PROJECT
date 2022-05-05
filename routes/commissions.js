@@ -31,7 +31,7 @@ function validateCommission(request, price) {
 // ROUTES //
 
 // GET /commissions
-router.get('/commissions', async (req,res) => {
+router.get('/', async (req,res) => {
     try {
         if (req.session.user) {
             const level = await userData.checkUserLevel(req.body.username);
@@ -48,7 +48,7 @@ router.get('/commissions', async (req,res) => {
 
 // v Necessary? v
 // POST /commissions
-// router.post('/commissions', async (req,res) => {
+// router.post('/', async (req,res) => {
 //     try {
 //         validateCommission(req.body.requestID, req.body.price);
 //     } catch (e) {

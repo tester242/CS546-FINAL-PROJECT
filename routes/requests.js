@@ -28,7 +28,7 @@ function validateRequest(id, title, desc) {
 // ROUTES //
 
 // GET /requests
-router.get('/requests', async (req,res) => {
+router.get('/', async (req,res) => {
     try {
         if (req.session.user) {
             const level = await userData.checkUserLevel(req.body.username);
@@ -46,7 +46,7 @@ router.get('/requests', async (req,res) => {
 });
 
 // POST /requests
-router.post('/requests', async (req,res) => {
+router.post('/', async (req,res) => {
     try {
         validateRequest(req.body.id, req.body.title, req.body.description);
     } catch (e) {

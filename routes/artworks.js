@@ -6,24 +6,16 @@ const artData = data.artworks;
 // ROUTES //
 
 // GET /
-// router.get('/', async (req, res) => {
-//   try {
-//       if (req.session.user) {
-//           res.redirect('/private');
-//       } else {
-//           res.render('users/login');
-//       }
-//   } catch (e) {
-//       return res.status(400).json(e)
-//   }
-// });
-
-// GET /
 router.get('/', async (req, res) => {
   try {
     const artworks = await artData.getAllArtworks();
     // console.log(artworks);
-    res.render('users/artworks', {artworks: artworks, loggedIn: req.session.user!=null});
+    if (artworks==[]){
+      res.render('users/artworks', {artworks: null, loggedIn: req.session.user!=null});
+    }
+    else{
+      res.render('users/artworks', {artworks: artworks, loggedIn: req.session.user!=null});
+    }
   } catch (e) {
     return res.status(400).json(e)
   }
