@@ -3,6 +3,7 @@ const router = express.Router();
 const data = require('../data');
 const commissionData = data.commissions;
 const userData = data.users;
+const xss = require('xss');
 
 const commissionFields = ['id', 'price'];
 
@@ -34,7 +35,7 @@ function validateCommission(request, price) {
 router.get('/', async (req,res) => {
     try {
         if (req.session.user) {
-            const level = await userData.checkUserLevel(req.body.username);
+            const level = await userData.checkUserLevel(xss(req.body.username));
             if (level) {
                 res.render('users/requestForm');
             } else {
@@ -50,7 +51,7 @@ router.get('/', async (req,res) => {
 // POST /commissions
 // router.post('/', async (req,res) => {
 //     try {
-//         validateCommission(req.body.requestID, req.body.price);
+//         validateCommission(xss(req.body.requestID), xss(req.body.price));
 //     } catch (e) {
 //         return res.render('users/requestForm', {error: e, errorExists: true});
 //     }

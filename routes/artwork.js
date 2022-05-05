@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const data = require('../data');
 const artData = data.artworks;
+const xss = require('xss');
 
 // ROUTES //
 

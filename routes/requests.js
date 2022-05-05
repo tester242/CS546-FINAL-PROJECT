@@ -3,6 +3,8 @@ const router = express.Router();
 const data = require('../data');
 const requestData = data.requests;
 const userData = data.users;
+const xss = require('xss');
+
 
 const requestFields = ['id', 'title', 'desc'];
 
@@ -31,7 +33,7 @@ function validateRequest(id, title, desc) {
 router.get('/', async (req,res) => {
     try {
         if (req.session.user) {
-            const level = await userData.checkUserLevel(req.body.username);
+            const level = await userData.checkUserLevel(xss(req.body.username));
             if (level) {
                 res.render('users/requestForm'); // User-view
             } else {
@@ -48,13 +50,13 @@ router.get('/', async (req,res) => {
 // POST /requests
 router.post('/', async (req,res) => {
     try {
-        validateRequest(req.body.id, req.body.title, req.body.description);
+        validateRequest(xss(req.body.id), xss(req.body.title), xss(req.body.description));
     } catch (e) {
         return res.render('users/requestForm', {error: e, errorExists: true});
     }
 
     try {
-        const create = await requestData.createRequest(req.body.id, req.body.title, req.body.description);
+        const create = await requestData.createRequest(xss(req.body.id), xss(req.body.title), xss(req.body.description));
         if (create.requestInserted) {
             res.redirect('/profile');
         }

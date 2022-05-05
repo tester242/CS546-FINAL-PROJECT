@@ -3,15 +3,33 @@
 <head>
     <meta charset="utf-8">
     <title>{{title}}</title>
-    {{ <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">   }}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="../public/style.css">
-    {{ <div class ="topnav">
-            <a id="main" href="/"><i class="material-icons">home</i></a>
-            <a id="art" href="/art"><i class="material-icons">color_lens</i></a>
-            <a id="commissions" href="/commissions"><i class="material-icons">description</i></a>
-            <a id="cart" href="/cart"><i class="material-icons">shopping_cart</i></a>
-            <a id="profile" class="active" href="/profile"><i class="material-icons">person</i></a>
-    </div> }}
+    <div class ="topnav">
+            <a id="home" href="/artworks"><i class="material-icons">home</i><span class="tooltip">Home</span></a>
+
+            {{#if isAdmin}}
+              <a id="artworkForm" href="/artworkForm"><i class="material-icons">add_box</i><span class="tooltip">Add Artwork</span></a>
+              <a id="orders" href="/orders"><i class="material-icons">sell</i><span class="tooltip">Orders</span></a>
+              <a id="requests" href="/requests"><i class="material-icons">pending</i><span class="tooltip">Pending Commision Requests</span></a>
+              <a id="commissions" href="/commissions"><i class="material-icons">description</i><span class="tooltip">Active Commissions</span></a>
+              
+              {{#if notifications}}
+                <a id="notifications" href="/notifications"><i class="material-icons">notifications_active</i><span class="tooltip">Notifications</span></a>
+              {{else}}
+                <a id="notifications" href="/notifications"><i class="material-icons">notifications</i><span class="tooltip">Notifications</span></a>
+              {{/if}}
+            {{else}}
+              <a id="requestForm" href="/requestForm"><i class="material-icons">post_add</i></a>
+              <a id="cart" href="/cart"><i class="material-icons">shopping_cart</i></a>
+            {{/if}}
+
+            {{#if loggedIn}}
+              <a id="profile" class="active" href="/profile"><i class="material-icons">person</i></a>
+            {{else}}
+              <a id="login" class="active" href="/login"><i class="material-icons">login</i></a>
+            {{/if}}
+    </div>
 </head>
 <body>
   <main>

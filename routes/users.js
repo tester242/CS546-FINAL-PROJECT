@@ -9,6 +9,8 @@ const express = require('express');
 const router = express.Router();
 const data = require('../data');
 const usersData = data.users;
+const xss = require('xss');
+
 
 
 
@@ -82,13 +84,13 @@ router.get('/signup', async (req, res) => {
 // POST /signup
 router.post('/signup', async (req, res) => {
     try {
-        checkValidInput(req.body.username, req.body.password);
+        checkValidInput(xss(req.body.username), xss(req.body.password));
     } catch (e) {
         return res.render('users/signup', {error: e, errorExists: true});
     }
 
     try {
-        const create = await usersData.createUser(req.body.username, req.body.password);
+        const create = await usersData.createUser(xss(req.body.username), xss(req.body.password));
         if (create.userInserted) {
             res.redirect('/');
         }
@@ -100,16 +102,16 @@ router.post('/signup', async (req, res) => {
 // POST /login
 router.post('/login', async (req, res) => {
     try {
-        checkValidInput(req.body.username, req.body.password);
+        checkValidInput(xss(body.username), xss(req.body.password));
     } catch (e) {
         return res.render('users/login', {error: e, errorExists: true});
     }
 
     try {
-        const check = await usersData.checkUser(req.body.username, req.body.password);
+        const check = await usersData.checkUser(xss(req.body.username), xss(req.body.password));
         if (check.authenticated == true) {
-            req.session.user = req.body.username;
-            res.cookie("AuthCookie", {user: req.body.username});
+            req.session.user = xss(req.body.username);
+            res.cookie("AuthCookie", {user: xss(req.body.username)});
             res.redirect('/private');
         } else {
             res.render('users/login', {error: e, errorExists: true});

@@ -3,6 +3,7 @@ const router = express.Router();
 const data = require('../data');
 const orderData = data.orders;
 const userData = data.users;
+const xss = require('xss');
 
 // ROUTES //
 
@@ -10,7 +11,7 @@ const userData = data.users;
 router.get('/', async (req, res) => {
     try {
         if (req.session.user) {
-            const level = await userData.checkUserLevel(req.body.username);
+            const level = await userData.checkUserLevel(xss(req.body.username));
             if (level) {
                 res.render('users/profile'); // User-view
             } else {

@@ -16,6 +16,7 @@
     "express-handlebars": "^6.0.5",
     "express-session": "^1.17.2",
     "GridFS": "^0.3.0",
-    "mongodb": "^4.5.0"
+    "mongodb": "^4.5.0",
+    "xss": "^1.0.11"
   }
 }
