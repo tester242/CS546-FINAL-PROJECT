@@ -26,7 +26,7 @@ router.get('/', async (req, res) => {
     res.render('users/shoppingCart', {cartNotEmpty: cartNotEmpty, artworks: artThumbnails, subtotal: cart["subtotal"]});
   } catch (e) {
     res.status(404);
-    res.render('users/shoppingcart', {title: "404 Error", error: e});
+    res.render('users/shoppingCart', {title: "404 Error", error: e});
   }
 });
 

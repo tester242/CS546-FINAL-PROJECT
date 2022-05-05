@@ -9,7 +9,7 @@ function validate(att, field) {
     if (!field) throw 'Error: Must provide a field to check.';
     if (typeof field !== 'string') throw 'Error: Must provide a string for field.';
     if (!(field in requestFields)) throw `Error: ${field} is an invalid field.`;
-    if (!att) throw `Error: ${field} needs to be a valid value.`;
+    if (!att) throw `Error: ${field} not given.`;
     if (typeof att !== 'string') throw `Error: ${field} must be a string.`;
     att = att.trim();
     if (att.length == 0) {

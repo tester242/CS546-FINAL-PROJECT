@@ -9,8 +9,8 @@ const orderFields = ['id', 'total', 'date'];
 function validate (att, field) {
     if (!field) throw 'Error: Must provide a field to check.';
     if (typeof field !== 'string') throw 'Error: Must provide a string for field.';
-    if (!(field in commissionFields)) throw `Error: ${field} is an invalid field.`;
-    if (!att) throw `Error: ${field} needs to be a valid value.`;
+    if (!(field in orderFields)) throw `Error: ${field} is an invalid field.`;
+    if (!att) throw `Error: ${field} not given.`;
     if (field === 'id') {
         if (typeof att !== 'string') throw `Error: ${field} must be a string.`;
         att = att.trim();

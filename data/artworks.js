@@ -27,39 +27,47 @@ function numChecker(num,numName){
   }
 }
 
+const artworkFields = ['name', 'tags', 'postedDate', 'price', 'artImage', 'artVideo', 'favorites', 'overallRating', 'description', 'reviews'];
+
 function validateID(id, name){
   if(!id) throw 'must provide '+name;
   stringChecker(id,name);
   if(!ObjectId.isValid(userId)) throw name+' is not a valid Object ID';
 }
 
+function validate(att, field) {
+  if (!field) throw 'Error: Must provide a field to check.';
+  if (typeof field !== 'string') throw 'Error: Must provide a string for field.';
+  if (!(field in artworkFields)) throw `Error: ${field} is an invalid field.`;
+  if (!att) throw `Error: ${field} not given.`;
+  if (field === 'name'||field === 'description'||field === 'tags'||field === 'artImage'||field === 'artVideo') {
+    stringChecker(att, field);
+  }
+  if (field === 'postedDate') {
+    dateChecker(att, field);
+  }
+  if (field === 'price'||field === 'favorites'||field === 'overallRating') {
+    numChecker(att, field);
+  }
+}
+
+function validateArtwork(name, tags, postedDate, price, artImage, artVideo, favorites, overallRating, description) {
+  validate(name, 'name');
+  validate(tags, 'tags');
+  validate(postedDate, 'postedDate');
+  validate(price, 'price');
+  validate(artImage, 'artImage');
+  validate(artVideo, 'artVideo');
+  validate(favorites, 'favorites');
+  validate(overallRating, 'overallRating');
+  validate(description, 'description');
+}
 
 module.exports = {
   //todo:
   async createArtwork(name, tags, postedDate, price, artImage, artVideo, favorites, overallRating, description, reviews){
-    if(!name)throw 'name not given';
-    if(!tags)throw 'tags not given';
-    if(!postedDate)throw 'postedDate not given';
-    if(!price)throw 'price not given';
-    if(!artImage)throw 'artImage not given';
-    if(!artVideo)throw 'artVideo not given';
-    if(!favorites)throw 'favorites not given';
-    if(!overallRating)throw 'overallRating not given';
-    if(!description)throw 'description not given';
-    if(!reviews)throw 'reviews not given';
-
-    stringChecker(name,"name");
-    stringChecker(description,"description");
-    stringChecker(tags,"tags");//is input as a string and will be chopped up into a list by commas
-    stringChecker(artImage,"artImage");
-    stringChecker(artVideo,"artVideo");
-
-    dateChecker(postedDate,"postedDate");
-
-    numChecker(price,"price");
-    numChecker(favorites,"favorites");
-    numChecker(overallRating,"overallRating");
-
+    validateArtwork(name, tags, postedDate, price, artImage, artVideo, favorites, overallRating, description);
+    
     if(reviews.length>0){
       this.checkReviews(reviews);
     }
@@ -70,16 +78,16 @@ module.exports = {
 
     const artCollection= await artworks();
     
-    let newArt={
-      name:name,
-      tags:tags,
+    let newArt = {
+      name: name,
+      tags: tags,
       postedDate:	postedDate,
-      price:price,
+      price: price,
       artImage:	artImage,
-      artVideo:	artVideo,
-      favorites:	favorites,
-      overallRating:	overallRating,
-      description:	description,
+      artVideo: artVideo,
+      favorites: favorites,
+      overallRating: overallRating,
+      description: description,
       reviews: reviews
     }
 

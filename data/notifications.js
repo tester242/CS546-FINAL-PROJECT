@@ -3,7 +3,7 @@ const notifications = mongoCollections.notifications;
 const { ObjectId } = require('mongodb');
 
 function validate(att, field) {
-
+    
 }
 
 module.exports = {
@@ -29,7 +29,7 @@ module.exports = {
         
         const notifCollection = await notifications();
 
-        const notification = await notifCollectionlfindOne({ _id: tempID });
+        const notification = await notifCollection.findOne({ _id: tempID });
         if (!notification) throw 'Error: No notification with that ID.';
 
         return notification;
