@@ -11,25 +11,27 @@ main {
 }
 
 
+
 /* TAGS */
 h1 {
-    background-color: #C89F9C;
+    background-color: #B36A5E;
+    color: white;
     font-size: 20px;
     padding: 6px;
 }
 
 form {
-    color: white;
-    background-color: #B36A5E;
+    color: black;
+    background-color: #C89F9C;
     padding: 6px;
 }
 
 footer {
     text-align: center;
     padding: 6px;
-    background-color: #C97C5D;
-    color: white;
+    background-color: #B36A5E;
 }
+
 
 
 /* IDs */
@@ -38,7 +40,7 @@ footer {
 	font-weight: bold;
 }
 
-#username {
+/* #username {
     background-color: #EED7C5;
     padding: 6px;
 }
@@ -46,7 +48,7 @@ footer {
 #password {
     background-color: #EED7C5;
     padding: 6px;
-}
+} */
 
 #usernameDisplay {
     color: white;
@@ -66,22 +68,22 @@ footer {
 }
 
 
+
 /* TOP NAVIGATION */
 html,
 body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
-    background-color: #64a6bd;
+    background-color: #EEE2DF;
   }
 .topnav {
     display: flex;
-    background-color: #90a8c3;
+    background-color: #B36A5E;
     overflow: hidden;
     flex-direction: row;
     justify-content: space-evenly;
     padding: .2%;
 }
-
 
 .topnav a {
     float: left;
@@ -95,7 +97,7 @@ body {
 .topnav a .tooltip{
     visibility: hidden;
     width: 120px;
-    background-color: black;
+    background-color: #B36A5E;
     color: #fff;
     text-align: center;
     border-radius: 6px;
@@ -108,14 +110,14 @@ body {
 
 .topnav a:hover .tooltip{
     visibility: visible;
-    background-color: #64a6bd;
+    background-color: #C97C5D;
     color: white;
     transition-duration: 500ms;
 }
 
 
 .topnav a.active {
-    background-color: #ada7c9;
+    background-color: #C89F9C;
     color: black;
 }
 
@@ -149,28 +151,28 @@ body {
 
 @media only screen and (max-width:480px) { 
     /* Smartphone view: 1 tile */
-    .box {
+    .icon {
         width: 100%;
         padding-bottom: 100%;
     }
 }
 @media only screen and (max-width:650px) and (min-width:481px) { 
     /* Tablet view: 2 tiles */
-    .box {
+    .icon {
         width: 50%;
         padding-bottom: 50%;
     }
 }
 @media only screen and (max-width:1050px) and (min-width:651px) { 
     /* Small desktop / iPad view: 3 tiles */
-    .box {
+    .icon {
         width: 33.3%;
         padding-bottom: 33.3%;
     }
 }
 @media only screen and (max-width:1290px) and (min-width:1051px) { 
     /* Medium desktop view: 4 tiles */
-    .box {
+    .icon {
         width: 25%;
         padding-bottom: 25%;
     }
