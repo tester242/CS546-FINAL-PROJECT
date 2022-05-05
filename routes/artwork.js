@@ -6,7 +6,7 @@ const artData = data.artworks;
 // ROUTES //
 
 // GET /
-router.get('/artwork/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
   if (!req.params.id){
     res.status(404);
     res.render('users/artwork', {title: "404 Error", error: "No artwork id given"});

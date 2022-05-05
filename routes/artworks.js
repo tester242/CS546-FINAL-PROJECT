@@ -19,7 +19,7 @@ const artData = data.artworks;
 // });
 
 // GET /
-router.get('/artworks', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const artworks = await artData.getAllArtworks();
     // console.log(artworks);
