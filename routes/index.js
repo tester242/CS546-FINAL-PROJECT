@@ -13,7 +13,7 @@ const artRoutes = require('./artworks');
 const constructorMethod = (app) => {
     app.use('/', userRoutes);
     app.use('/artworks', artRoutes);
-    app.use('/artwork', artRoutes);
+    // app.use('/artwork', artRoutes);
 
     app.use('*', (req, res) => {
         res.sendStatus(404);

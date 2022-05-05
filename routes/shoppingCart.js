@@ -7,7 +7,7 @@ const artData = data.artwork;
 // ROUTES //
 
 // GET /
-router.get('/shoppingcart', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const cart = await cartData.getCart();
     console.log(cart);

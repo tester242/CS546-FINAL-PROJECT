@@ -7,7 +7,7 @@ const userData = data.users;
 // ROUTES //
 
 // GET //
-router.get('/orders', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         if (req.session.user) {
             const level = await userData.checkUserLevel(req.body.username);
