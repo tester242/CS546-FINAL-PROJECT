@@ -11,12 +11,12 @@ router.get('/', async (req, res) => {
   try {
     const artworks = await artData.getAllArtworks();
     if(req.session.user){
-      const level= userData.checkUserLevel(req.session.user);
+      const level= await userData.checkUserLevel(req.session.user);
       if (artworks==[]){
-        res.render('users/artworks', {title: "Artworks", artworks: null, loggedIn: true,isAdmin:!level});
+        res.render('users/artworks', {title: "Artworks", artworks: null, loggedIn: true,isAdmin:level==0});
       }
       else{
-        res.render('users/artworks', {title: "Artworks", artworks: artworks, loggedIn:true,isAdmin:!level});
+        res.render('users/artworks', {title: "Artworks", artworks: artworks, loggedIn:true,isAdmin:level==0});
       }
     }
     else{

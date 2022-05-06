@@ -37,9 +37,9 @@ router.get('/', async (req,res) => {
         if (req.session.user) {
             const level = await userData.checkUserLevel(xss(req.session.user));
             if (level) {
-                res.render('users/requestForm',{loggedIn: true});
+                res.render('users/requestForm', {title: "Request Commission", loggedIn: true});
             } else {
-                res.render('users/commissions',{loggedIn: true,isAdmin:true});
+                res.render('users/commissions', {title: "Active Commissions", loggedIn: true,isAdmin:true});
             }
         }
     } catch (e) {

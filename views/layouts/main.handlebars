@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>{{title}}</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="../public/css/style.css">
     <div class="topnav">
@@ -36,4 +37,16 @@
     {{{body}}}
   </main>
 </body>
+<script>
+    $(document).ready(function () {
+        $('a').click(function () {
+
+          $('a').removeClass('active');       // ADD CLASS TO ALL THE TAGS.
+          $(this)
+          .removeClass('in-active')
+          .addClass('active');
+            
+        })
+    });
+</script>
 </html>

@@ -19,7 +19,7 @@
         <dt>State</dt> <br>
         <dd>{{state}}</dd><br>
 
-        {{#if isAdmin}}
+        {{#unless isAdmin}}
             <dt>Favorites</dt> <br>
             <dd>{{favoritesCount}} Favorited</dd><br>
             <dt>Favorited Art</dt><br>
@@ -78,7 +78,7 @@
                     No commissions
                 {{/if}}   
             </dd> <br>
-        {{/if}}
+        {{/unless}}
     </dl>
 </article>
 

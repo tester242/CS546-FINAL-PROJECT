@@ -2,7 +2,7 @@
     <p id="error">{{error}}</p>
 {{/if}}
 
- <dl>
+<dl>
     {{#if cartNotEmpty}}
         {{#each artworks}}
             <img alt={{this.name}} src={{this.artImage}}> 
@@ -18,8 +18,16 @@
 
 <p>Subtotal: {{subtotal}}<p>
 
-<p>PAYMENT PROCESS: Please Venmo Maggie at @MaggiesArt</p>
-<p>Thank you for your purchase!</p>
+{{!-- FORM DOES NOT WORK --}}
+<form method="POST" id="purchase-form" action="/cart">
+    <button type="button">Purchase</button><br>
+</form>
+
+{{!-- USE AJAX TO UNHIDE THIS WHEN PURCHASED --}}
+<div id="thank-you" hidden>
+    <p>PAYMENT PROCESS: Please Venmo Maggie at @MaggiesArt</p>
+    <p>Thank you for your purchase!</p>
+</div>
 
 <footer>
     <a href="/artworks">Back to All Artworks</a><br>
