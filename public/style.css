@@ -20,6 +20,12 @@ h1 {
     padding: 6px;
 }
 
+h2 {
+    background-color: #B36A5E;
+    color: white;
+    padding: 6px;
+}
+
 form {
     color: black;
     background-color: #C89F9C;
@@ -36,13 +42,17 @@ footer {
     background-color: #B36A5E;
 }
 
-dt{
-    text-decoration: underline;
+dt {
+    font-weight: bold;
+    font-size: 18px;
+    background-color:#C89F9C;
+    padding: 8px;
     
 }
 
-dd{
-    background-color:#C89F9C ;
+dd {
+    background-color: #EED7C5;
+    padding: 6px;
 }
 
 
@@ -54,28 +64,22 @@ dd{
 }
 
 #pageTitle {
-    background-color: #B36A5E;
+    background-color: #C97C5D;
     color: white;
     font-size: 35px;
     padding: 7px;
 }
 
 
-/* #username {
-    background-color: #EED7C5;
-    padding: 6px;
-}
-
-#password {
-    background-color: #EED7C5;
-    padding: 6px;
-} */
-
 #usernameDisplay {
     color: white;
     background-color: #C97C5D;
     font-size: 40px;
     padding: 6px;
+}
+
+#description {
+    height:80px;
 }
 
 
