@@ -98,7 +98,7 @@ router.get('/', async (req, res) => {
         if (req.session.user) {
             res.redirect('/private');
         } else {
-            res.render('users/login');
+            res.render('users/login', {title: "Login"});
         }
     } catch (e) {
         return res.status(400).json(e)
@@ -111,7 +111,7 @@ router.get('/signup', async (req, res) => {
         if (req.session.user) {
             res.redirect('/private');
         } else {
-            res.render('users/signup');
+            res.render('users/signup', {title: "Sign Up"});
         }
     } catch (e) {
         return res.status(400).json(e); 
@@ -124,7 +124,7 @@ router.post('/signup', async (req, res) => {
         checkValidInputTotal(xss(req.body.username), xss(req.body.password), xss(req.body.confirmPassword), xss(req.body.firstName), xss(req.body.lastName), 
         xss(req.body.email), xss(req.body.pronouns), xss(req.body.age),xss(req.body.city), xss(req.body.state));
     } catch (e) {
-        return res.render('users/signup', {error: e, errorExists: true});
+        return res.render('users/signup', {title: "Sign Up", error: e, errorExists: true});
     }
 
     try {
@@ -134,7 +134,7 @@ router.post('/signup', async (req, res) => {
             res.redirect('/');
         }
     } catch (e) {
-        return res.render('users/signup', {error: e, errorExists: true});
+        return res.render('users/signup', {title: "Sign Up", error: e, errorExists: true});
     }
 });
 
@@ -143,7 +143,7 @@ router.post('/login', async (req, res) => {
     try {
         checkValidInput(xss(req.body.username), xss(req.body.password));
     } catch (e) {
-        return res.render('users/login', {error: e, errorExists: true});
+        return res.render('users/login', {title: "Login", error: e, errorExists: true});
     }
 
     try {
@@ -153,10 +153,10 @@ router.post('/login', async (req, res) => {
             res.cookie("AuthCookie", {user: xss(req.body.username)});
             res.redirect('/private');
         } else {
-            res.render('users/login', {error: e, errorExists: true});
+            res.render('users/login', {title: "Login", error: e, errorExists: true});
         }
     } catch (e) {
-        res.render('users/login', {error: e, errorExists: true}); 
+        res.render('users/login', {title: "Login", error: e, errorExists: true}); 
     }
 });
 
@@ -176,7 +176,7 @@ router.get('/private', async (req, res) => {
 router.get('/logout', async (req, res) => {
     res.clearCookie("AuthCookie");
     req.session.destroy();
-    res.render('users/logout');
+    res.render('users/logout', {title: "Logout"});
 });
 
 module.exports = router;

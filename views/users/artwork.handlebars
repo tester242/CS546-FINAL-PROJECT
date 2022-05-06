@@ -6,9 +6,7 @@
     <h1>{{name}}</h1>
     <img alt={{name}} src={{artImage}}> 
     {{#if hasVideo}}
-        <video width="400" controls>
-            <source src="artVideo" type="video/mp4">
-        </video>
+        <iframe width="420" height="315" src={{artVideo}}></iframe>
     {{/if}}
     <dl> 
         <dt>Date Posted</dt> 
