@@ -6,25 +6,39 @@ const requests = require('./requests');
 
 const orderFields = ['id', 'total', 'date'];
 
-function validate (att, field) {
-    if (!field) throw 'Error: Must provide a field to check.';
-    if (typeof field !== 'string') throw 'Error: Must provide a string for field.';
-    if (!(field in orderFields)) throw `Error: ${field} is an invalid field.`;
-    if (!att) throw `Error: ${field} not given.`;
-    if (field === 'id') {
-        if (typeof att !== 'string') throw `Error: ${field} must be a string.`;
-        att = att.trim();
-        if (att.length == 0) throw `Error: ${field} cannot be an empty string.`;
-        if (!ObjectId.isValid(att)) throw 'Error: commissionID is not a valid Object ID.';
+// function validate (att, field) {
+//     if (!field) throw 'Error: Must provide a field to check.';
+//     if (typeof field !== 'string') throw 'Error: Must provide a string for field.';
+//     if (!(field in orderFields)) throw `Error: ${field} is an invalid field.`;
+//     if (!att) throw `Error: ${field} not given.`;
+//     if (field === 'id') {
+//         if (typeof att !== 'string') throw `Error: ${field} must be a string.`;
+//         att = att.trim();
+//         if (att.length == 0) throw `Error: ${field} cannot be an empty string.`;
+//         if (!ObjectId.isValid(att)) throw 'Error: commissionID is not a valid Object ID.';
+//     }
+//     if (field === 'total') {
+//         if (typeof att !== 'number') throw `Error: ${field} must be a number.`;
+//         if (att < 0) throw `Error: ${field} cannot be less than 0.`;
+//     }
+//     if (field === 'date') {
+//         if (typeof att !== 'string') throw `Error: ${field} must be a string.`;
+//         if (!isValidDate(att)) throw `Error: ${field} must be a valid date string MM/DD/YYYY.`;
+//     }
+// }
+function stringChecker(str, variableName){
+    if(typeof str != 'string'){
+        throw `${variableName || 'provided variable'} is not a String`;
     }
-    if (field === 'total') {
-        if (typeof att !== 'number') throw `Error: ${field} must be a number.`;
-        if (att < 0) throw `Error: ${field} cannot be less than 0.`;
+    if(str.trim().length==0){
+        throw 'Strings can not be empty';
     }
-    if (field === 'date') {
-        if (typeof att !== 'string') throw `Error: ${field} must be a string.`;
-        if (!isValidDate(att)) throw `Error: ${field} must be a valid date string MM/DD/YYYY.`;
-    }
+}
+
+function validateID(id, name){
+    if(!id) throw 'must provide '+name;
+    stringChecker(id,name);
+    if(!ObjectId.isValid(id)) throw name+' is not a valid Object ID';
 }
 
 // Start StackOverFlow isValidDate
@@ -87,13 +101,21 @@ module.exports = {
     },
 
     async get(orderID) {
-        validate(orderID, 'id');
-
-        var tempID = ObjectId(order.trim());
+        validate(orderID.toString(), 'orderId');
 
         const orderCollection = await orders();
 
-        const order = await orderCollection.findOne({ _id: tempID });
+        const order = await orderCollection.findOne({ _id: orderID});
+        if (!order) throw 'Error: No order with that ID.';
+
+        return order;
+    },
+    async getFromUser(userID) {
+        validate(userID.toString(), 'orderId');
+
+        const orderCollection = await orders();
+
+        const order = await orderCollection.findOne({ userID: userID});
         if (!order) throw 'Error: No order with that ID.';
 
         return order;
