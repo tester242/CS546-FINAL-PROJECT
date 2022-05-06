@@ -35,6 +35,14 @@ function stringChecker(str, variableName){
     }
 }
 
+function numChecker(num, variableName){
+    if(typeof num != 'string')throw `${variableName || 'provided variable'} can't be converted into a number`;
+    const newNum=Number(num);
+    if(!Number.isInteger(newNum))throw`${variableName || 'provided variable'} is not a number`;
+    if(newNum<=0)throw 'Numbers can not be less than or equal to zero';
+}
+
+
 function validateID(id, name){
     if(!id) throw 'must provide '+name;
     stringChecker(id,name);
@@ -69,10 +77,10 @@ function isValidDate(dateString) {
 // End StackOverFlow isValidDate
 
 function validateOrder(userID, cartID, total, date) {
-    validate(userID, 'id');
-    validate(cartID, 'id');
-    validate(total, 'total');
-    validate(date, 'date');
+    validateID(userID.toString(), 'userid');
+    validateID(cartID.toString(), 'cartid');
+    numChecker(total, 'total');
+    numCheckerS(date, 'date');
 }
 
 module.exports = {
@@ -100,29 +108,29 @@ module.exports = {
         return { orderInserted: true };
     },
 
+      //make sure to check if the return value exists, its done purposefully this way
     async get(orderID) {
-        validate(orderID.toString(), 'orderId');
+        validateID(orderID.toString(), 'orderId');
 
         const orderCollection = await orders();
 
         const order = await orderCollection.findOne({ _id: orderID});
-        if (!order) throw 'Error: No order with that ID.';
 
         return order;
     },
+    //make sure to check if the return value exists, its done purposefully this way
     async getFromUser(userID) {
-        validate(userID.toString(), 'orderId');
+        validateID(userID.toString(), 'orderId');
 
         const orderCollection = await orders();
 
         const order = await orderCollection.findOne({ userID: userID});
-        if (!order) throw 'Error: No order with that ID.';
 
         return order;
     },
 
     async remove(orderID) {
-        validate(orderID, 'id');
+        validateID(orderID, 'id');
 
         var tempID = ObjectId(orderID.trim());
 

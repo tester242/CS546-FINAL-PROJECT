@@ -44,7 +44,7 @@ router.get('/:id', async (req, res) => {
         a[i] = "N/A";
       }
     }
-    res.render('users/artwork', {name: a[0], tags: a[1], postedDate: a[2], price: a[3], artImage: a[4], hasVideo: hasVideo, artVideo: a[5], favorites: a[6], overallRating: a[7], description: a[8], reviews: a[9]});
+    res.render('users/artwork', {title: "artwork",name: a[0], tags: a[1], postedDate: a[2], price: a[3], artImage: a[4], hasVideo: hasVideo, artVideo: a[5], favorites: a[6], overallRating: a[7], description: a[8], reviews: a[9]});
   } catch (e) {
     res.status(404);
     res.render('users/artwork', {title: "404 Error", error: e});

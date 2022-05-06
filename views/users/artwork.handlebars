@@ -15,6 +15,12 @@
         <dd>{{description}}</dd><br>
         <dt>Price</dt> 
         <dd>{{price}}</dd><br>
+
+        {{!-- FORM DOES NOT WORK --}}
+        <form method="POST" id="buy-form" action="/cart">
+            <button type="button">Buy</button><br>
+        </form>
+
         <dt>Favorites</dt> 
         <dd>{{favorites}}</dd><br>
         <dt>Rating</dt> 

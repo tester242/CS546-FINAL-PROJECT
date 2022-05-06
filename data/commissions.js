@@ -2,10 +2,11 @@ const mongoCollections = require('../config/mongoCollections');
 const commissions = mongoCollections.commissions;
 const requests = mongoCollections.requests;
 const { ObjectId } = require('mongodb');
+const { getFromUser } = require('./requests');
 
 const commissionFields = ['id', 'price'];
 
-function validateID(id, name){
+function validateIDID(id, name){
     if(!id) throw 'must provide '+name;
     stringChecker(id,name);
     if(!ObjectId.isValid(id)) throw name+' is not a valid Object ID';
@@ -24,7 +25,7 @@ function numChecker(num, variableName){
 }
 
 
-// function validate(att, field) {
+// function validateID(att, field) {
 //     if (!field) throw 'Error: Must provide a field to check.';
 //     if (typeof field !== 'string') throw 'Error: Must provide a string for field.';
 //     if (!(field in commissionFields)) throw `Error: ${field} is an invalid field.`;
@@ -67,34 +68,39 @@ module.exports = {
         if (insertCommission.insertedCount === 0) throw 'Error: Could not add new commission.';
         return { commissionInserted: true };
     },
-
+    //may return null, this is on purpose
     async get(commissionID) {
-        validate(commissionID, 'id');
-
-        var tempID = ObjectId(commissionID.trim());
+        validateID(commissionID.toString(), 'id');
 
         const commissionCollection = await commissions();
 
-        const commission = await commissionCollection.findOne({ _id: tempID });
-        if (!commission) throw 'Error: No commission with that ID.';
+        const commission = await commissionCollection.findOne({ _id: commissionID });
+       
+        return commission;
+    },
+    //may return null, this is on purpose
+    async getFromUser(userID) {
+        validateID(userID.toString(), 'id');
 
+        const commissionCollection = await commissions();
+
+        const commission = await commissionCollection.findOne({ _id: userID });
+        
         return commission;
     },
 
     async remove(commissionID) {
-        validate(commissionID, 'id');
-
-        var tempID = ObjectId(commissionID.trim());
+        validateID(commissionID.toString(), 'id');
 
         const commissionCollection = await commissions();
-        const removeCommission = await commissionCollection.deleteONe({ _id: tempID });
+        const removeCommission = await commissionCollection.deleteONe({ _id: commissionID });
         if (removeCommission.deleteCount === 0) throw 'Error: Failed to remove commission with that ID.';
 
         return { commissionRemoved: true };
     },
     
     async update(commissionID, field, val) {
-        validate(commissionID, 'id');
+        validateID(commissionID.toString(), 'id');
         const commissionCollection = await commissions();
         const commission = this.get(commissionID);
         if (!field) throw 'Error: Must provide a field.';

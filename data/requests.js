@@ -2,6 +2,7 @@ const mongoCollections = require('../config/mongoCollections');
 const requests = mongoCollections.requests;
 const users = mongoCollections.users;
 const { ObjectId } = require('mongodb');
+const { getFromUser } = require('./orders');
 
 const requestFields = ['id', 'title', 'desc'];
 
@@ -98,14 +99,23 @@ module.exports = {
         if (insertRequest.insertedCount === 0) throw 'Error: Could not add new request.';
         return { requestInserted: true };
     },
-
+      //make sure to check if the return value exists, its done purposefully this way
     async get(requestID) {
-        validateID(requestId.toString(),"requestId");
+        validateID(requestID.toString(),"requestId");
 
         const requestCollection = await requests();
 
         const request = await requestCollection.findOne({ _id: requestID });
-        if (!request) throw 'Error: No request with that ID.';
+
+        return request;
+    },
+      //make sure to check if the return value exists, its done purposefully this way
+    async getFromUser(userID) {
+        validateID(userID.toString(),"userId");
+
+        const requestCollection = await requests();
+
+        const request = await requestCollection.findOne({ _id: userID });
 
         return request;
     },

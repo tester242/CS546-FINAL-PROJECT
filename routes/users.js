@@ -167,15 +167,17 @@ router.post('/login', async (req, res) => {
 // GET profile page
 router.get('/private', async (req, res) => {
     try {
-        const level = await userData.checkUserLevel(req.session.user);
+        const level = await usersData.checkUserLevel(req.session.user);
         const user=await usersData.getUser(req.session.user);
-        const orders= await orderData.getFromUser(user);
-        res.render('users/profile', {username: req.session.user, firstName: user.firstName,
+        const orders= await orderData.getFromUser(user._id);
+        const requests=await requestData.getFromUser(user._id);
+        const commissions=await commisionData.
+        res.render('users/profile', {title: "Profile",username: req.session.user, firstName: user.firstName,
         lastName: user.lastName,email: user.email,pronouns: user.pronouns,age:user.age,city:user.city,state:user.state,
-        favoritesCount:user.favoritesCount,favoritedArt:user.favoritedArt,loggedIn: req.session.user!=null,isAdmin: level,
-        });
-    } catch (error) {
-        res.render('users/profile', {error: e, errorExists: true,loggedIn: req.session.user!=null}); 
+        favoritesCount:user.favoritesCount,favoritedArt:user.favoritedArt,loggedIn: req.session.user!=null,isAdmin: level==0,
+        orders:orders,requests:requests, commissions:commissions});
+    } catch (e) {
+        res.render('users/profile', {title: "Profile",error: e, errorExists: true,loggedIn: req.session.user!=null}); 
     }    
 });
 

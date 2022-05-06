@@ -19,65 +19,65 @@
         <dt>State</dt> <br>
         <dd>{{state}}</dd><br>
 
-        {{#if !isAdmin}}
-            <dt>Favorites</dt> 
+        {{#if isAdmin}}
+            <dt>Favorites</dt> <br>
             <dd>{{favoritesCount}} Favorited</dd><br>
-            <dt>Favorited Art</dt>
+            <dt>Favorited Art</dt><br>
             <dd> 
                 {{#if favoritedArt}}
                 <ul> 
                     {{#each favoritedArt}}
-                        <li>{{this.name}}</li>
-                        <li><img alt={{this.name}} src={{this.artImage}}></li>
+                        <li>{{this.name}}</li><br>
+                        <li><img alt={{this.name}} src={{this.artImage}}></li><br>
                     {{/each}}
                 </ul> 
                 {{else}}
                     No Favorites
                 {{/if}}   
-            </dd> 
+            </dd> <br>
 
-            <dt>Orders</dt> 
+            <dt>Orders</dt> <br>
             <dd> 
                 {{#if orders}}
                 <ul> 
                     {{#each orders}}
-                        <li>{{this.cartId}}</li>
-                        <li>{{this.total}}</li>
-                        <li>{{this.address}}</li>
+                        <li>{{this.cartId}}</li><br>
+                        <li>{{this.total}}</li><br>
+                        <li>{{this.address}}</li><br>
                     {{/each}}
                 </ul> 
                 {{else}}
                     No orders
                 {{/if}}   
-            </dd> 
+            </dd> <br>
 
-            <dt>Pending Commission Requests</dt> 
+            <dt>Pending Commission Requests</dt> <br>
             <dd> 
                 {{#if requests}}
                 <ul> 
                     {{#each requests}}
-                        <li>{{this.title}}</li>
+                        <li>{{this.title}}</li><br>
                     {{/each}}
                 </ul> 
                 {{else}}
                     No pending requests
                 {{/if}}   
-            </dd> 
+            </dd> <br>
 
-            <dt>Active Commissions</dt> 
+            <dt>Active Commissions</dt> <br>
             <dd> 
                 {{#if commissions}}
                 <ul> 
                     {{#each commissions}}
-                        <li>{{this.commissionID.title}}</li>
-                        <li>{{this.price}}</li>
-                        <li>{{this.status}}</li>
+                        <li>{{this.commissionID.title}}</li><br>
+                        <li>{{this.price}}</li><br>
+                        <li>{{this.status}}</li><br>
                     {{/each}}
                 </ul> 
                 {{else}}
                     No commissions
                 {{/if}}   
-            </dd> 
+            </dd> <br>
         {{/if}}
     </dl>
 </article>
