@@ -20,12 +20,14 @@
     <label id="title" for="title">Artwork Title:</label><br>
     <input type="text" id="title" name="title"><br><br>
 
-    <label id="description" for="description">Description:</label><br>
-    <input type="text" id="description" name="description"><br><br>
+    <form action="/profile">
+        <label id="description" for="description">Description:</label><br>
+        <textarea id="description" name="description" rows="4" cols="50"></textarea>
+    </form><br>
 
     {{#if errorExists}}
         <p id="error">{{error}}</p>
     {{/if}}
 
-    <button type="submit">Submit</button><br><br><br>
+    <button type="submit">Submit</button>
 </form>
