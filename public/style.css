@@ -32,6 +32,15 @@ footer {
     background-color: #B36A5E;
 }
 
+dt{
+    text-decoration: underline;
+    
+}
+
+dd{
+    background-color:#C89F9C ;
+}
+
 
 
 /* IDs */

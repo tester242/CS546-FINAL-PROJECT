@@ -28,6 +28,24 @@ const isAlphaNumeric = function isAlphaNumeric(str) {
     return true;
 }
 
+function stringChecker(str, variableName){
+    if(typeof str != 'string')throw `${variableName || 'provided variable'} is not a String`;
+    if(str.trim().length==0)throw 'Strings can not be empty';
+}
+
+function numChecker(num, variableName){
+    if(typeof num != 'string')throw `${variableName || 'provided variable'} can't be converted into a number`;
+    const newNum=Number(num);
+    if(!Number.isInteger(newNum))throw`${variableName || 'provided variable'} is not a number`;
+    if(newNum<=0)throw 'Numbers can not be less than or equal to zero';
+}
+
+
+function emailChecker(email){
+    stringChecker(email,'Email');
+    if(email.indexOf('@')<=0||email.indexOf('.')<=2)throw 'Error: Email improperly formatted';
+}
+
 const checkValidUsername = function checkValidUsername(str) {
     //const alphanumeric = new RegExp('/^[a-z0-9]+$/i');
     if (!str) throw 'Error: Username must be provided.';
@@ -53,13 +71,33 @@ const checkValidInput = function checkValidInput(username, password) {
     checkValidPassword(password);
 }
 
+const checkValidInputTotal = function checkValidInput(username, password, confirmPassword, firstName, lastName, email, pronouns, age, city, state) {
+    if (!username || !password||!confirmPassword||!firstName||!lastName||!email||!pronouns||!age||!city||!state) throw 'Error: All Fields must be provided.';
+    checkValidUsername(username);
+    checkValidPassword(password);
+    checkValidPassword(confirmPassword);
+
+    if(password!==confirmPassword)throw 'Error: Password and Confirm Password do not match.';
+
+    stringChecker(firstName,'First Name');
+    stringChecker(lastName, 'Last Name');
+    stringChecker(pronouns,'pronouns');
+    stringChecker(city,'City');
+    stringChecker(state,'State');
+
+    numChecker(age);
+
+    emailChecker(email);
+}
+
+
 
  
  
 // MAIN FUNCTIONS //
  
-async function createUser(username, password) {
-    checkValidInput(username, password);
+async function createUser(username, password, confirmPassword, firstName, lastName, email, pronouns, age, city, state) {
+    checkValidInputTotal(username, password, confirmPassword, firstName, lastName, email, pronouns, age, city, state)
 
     const userCollection = await users();
     const hash = await bcrypt.hash(password, saltRounds);
@@ -67,11 +105,21 @@ async function createUser(username, password) {
     username = username.toLowerCase();
     const user = await userCollection.findOne({username: username});
     if (user) throw 'Error: There is already an existing user with that username.';
-
+    const newAge=Number(age);
     let newUser = {
+        firstName:firstName,
+        lastName:lastName,
+        email:email,
+        pronouns:pronouns,
+        age:newAge,
+        city:city,
+        state:state,
         username: username,
         password: hash,
+        favoritesCount:0,
+        favoritedArt:[],
         userLevel: 1
+
     }
 
     const insertUser = await userCollection.insertOne(newUser);
@@ -143,6 +191,17 @@ async function updateUserLevel(username) {
         throw 'Error: Could not update user level successfully.';
     }
 }
+async function getUser(username) {
+    checkValidUsername(username);
+
+    const userCollection = await users();
+
+    username = username.toLowerCase();
+    const user = await userCollection.findOne({ username: username });
+    if (!user) throw 'Error: User not found.';
+
+    return user;
+}
  
  
 module.exports = {
@@ -152,5 +211,6 @@ module.exports = {
     createUser,
     checkUser,
     checkUserLevel,
-    updateUserLevel
+    updateUserLevel,
+    getUser
 };
