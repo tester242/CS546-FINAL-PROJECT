@@ -102,7 +102,7 @@ router.post('/signup', async (req, res) => {
 // POST /login
 router.post('/login', async (req, res) => {
     try {
-        checkValidInput(xss(body.username), xss(req.body.password));
+        checkValidInput(xss(req.body.username), xss(req.body.password));
     } catch (e) {
         return res.render('users/login', {error: e, errorExists: true});
     }
@@ -123,7 +123,7 @@ router.post('/login', async (req, res) => {
 
 // GET profile page
 router.get('/private', async (req, res) => {
-    res.render('users/private', {username: req.session.user});
+    res.render('users/profile', {username: req.session.user});
 });
 
 // GET /logout

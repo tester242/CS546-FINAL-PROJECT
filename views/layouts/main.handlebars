@@ -9,7 +9,7 @@
             <a id="home" href="/artworks"><i class="material-icons">home</i><span class="tooltip">Home</span></a>
 
             {{#if isAdmin}}
-              <a id="artworkForm" href="/artworkForm"><i class="material-icons">add_box</i><span class="tooltip">Add Artwork</span></a>
+              {{!-- <a id="artworkForm" href="/artworkForm"><i class="material-icons">add_box</i><span class="tooltip">Add Artwork</span></a> --}}
               <a id="orders" href="/orders"><i class="material-icons">sell</i><span class="tooltip">Orders</span></a>
               <a id="requests" href="/requests"><i class="material-icons">pending</i><span class="tooltip">Pending Commision Requests</span></a>
               <a id="commissions" href="/commissions"><i class="material-icons">description</i><span class="tooltip">Active Commissions</span></a>
@@ -20,14 +20,14 @@
                 <a id="notifications" href="/notifications"><i class="material-icons">notifications</i><span class="tooltip">Notifications</span></a>
               {{/if}}
             {{else}}
-              <a id="requestForm" href="/requestForm"><i class="material-icons">post_add</i><span class="tooltip">Request Commission</span></a>
-              <a id="cart" href="/cart"><i class="material-icons">shopping_cart</i><span class="tooltip">Shopping Cart</span></a>
+              <a id="requestForm" href="/requests"><i class="material-icons">post_add</i><span class="tooltip">Request Commission</span></a>
+              <a id="cart" href="/shoppingCart"><i class="material-icons">shopping_cart</i><span class="tooltip">Shopping Cart</span></a>
             {{/if}}
 
             {{#if loggedIn}}
-              <a id="profile" class="active" href="/profile"><i class="material-icons">person</i><span class="tooltip">Profile</span></a>
+              <a id="profile" class="active" href="/"><i class="material-icons">person</i><span class="tooltip">Profile</span></a>
             {{else}}
-              <a id="login" class="active" href="/login"><i class="material-icons">login</i><span class="tooltip">Login</span></a>
+              <a id="login" class="active" href="/"><i class="material-icons">login</i><span class="tooltip">Login</span></a>
             {{/if}}
     </div>
 </head>

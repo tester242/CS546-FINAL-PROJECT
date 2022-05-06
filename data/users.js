@@ -30,21 +30,25 @@ const isAlphaNumeric = function isAlphaNumeric(str) {
 
 const checkValidUsername = function checkValidUsername(str) {
     //const alphanumeric = new RegExp('/^[a-z0-9]+$/i');
-
+    if (!str) throw 'Error: Username must be provided.';
     if (typeof str != 'string') throw `Error: Username must be a string.`;
-    if (str.trim().length != str.length) throw 'Error: Username must not contain spaces.';
-    if (str.trim().length < 4) throw `Error: Username must be at least 4 characters long.`;
+    if (str.indexOf(' ')!=-1) throw 'Error: Username must not contain spaces.';
+    if (str.trim().length < 4){
+        console.log("this is the string "+str+"!");
+        throw `Error: Username must be at least 4 characters long.`;
+    } 
     if (!isAlphaNumeric(str)) throw 'Error: Username must only contain alphanumeric characters.';
 }
 
 const checkValidPassword = function checkValidPassword(str) {
+    if (!str) throw 'Error: Password must be provided.';
     if (typeof str != 'string') throw `Error: Password must be a string.`;
-    if (str.trim().length != str.length) throw 'Error: Password must not contain spaces.';
+    if (str.indexOf(' ')!=-1) throw 'Error: Password must not contain spaces.';
     if (str.trim().length < 6) throw `Error: Password must be at least 6 characters long.`;
 }
 
 const checkValidInput = function checkValidInput(username, password) {
-    if (!username || !password) throw 'Error: Username and password must be provided.'
+    if (!username || !password) throw 'Error: Username and password must be provided.';
     checkValidUsername(username);
     checkValidPassword(password);
 }

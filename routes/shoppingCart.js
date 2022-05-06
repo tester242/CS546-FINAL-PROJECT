@@ -9,7 +9,8 @@ const artData = data.artwork;
 // GET /
 router.get('/', async (req, res) => {
   try {
-    const cart = await cartData.getCart();
+    //no getCart command, theres a get(userid) command
+    const cart = await cartData.getCart(); //? need to create a cart if the user does not hav one and use the user id for to check
     console.log(cart);
     let artThumbnails = [];
     for (index in cart["artId"]){

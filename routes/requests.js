@@ -33,7 +33,8 @@ function validateRequest(id, title, desc) {
 router.get('/', async (req,res) => {
     try {
         if (req.session.user) {
-            const level = await userData.checkUserLevel(xss(req.body.username));
+            console.log("here");
+            const level = await userData.checkUserLevel(req.session.user);
             if (level) {
                 res.render('users/requestForm'); // User-view
             } else {
