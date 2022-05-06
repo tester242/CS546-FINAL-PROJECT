@@ -32,6 +32,9 @@
                 <input type="submit" name="accept" id="accept" value="Accept" onclick="acceptFunction()">
                 <input type="submit" name="reject" id="reject" value="Reject" onclick="rejectFunction()">
             </form> 
+            <form method="POST" id="requests-form" action="/requests">
+                <button type="submit">Accept</button><br><br><br>
+            </form>
         </div>
     {{/each}}
 </article>
