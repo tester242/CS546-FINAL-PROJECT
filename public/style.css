@@ -16,7 +16,7 @@ main {
 h1 {
     background-color: #B36A5E;
     color: white;
-    font-size: 20px;
+    font-size: 25px;
     padding: 6px;
 }
 
@@ -26,9 +26,13 @@ form {
     padding: 6px;
 }
 
+p {
+    font-size: 18px;
+}
+
 footer {
     text-align: center;
-    padding: 6px;
+    padding: 8px;
     background-color: #B36A5E;
 }
 
@@ -48,6 +52,14 @@ dd{
 	color: red;
 	font-weight: bold;
 }
+
+#pageTitle {
+    background-color: #B36A5E;
+    color: white;
+    font-size: 35px;
+    padding: 7px;
+}
+
 
 /* #username {
     background-color: #EED7C5;
@@ -91,7 +103,7 @@ body {
     overflow: hidden;
     flex-direction: row;
     justify-content: space-evenly;
-    padding: .2%;
+    /*padding: .2%;*/
 }
 
 .topnav a {
