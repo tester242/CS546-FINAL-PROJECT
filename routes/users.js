@@ -9,6 +9,10 @@ const express = require('express');
 const router = express.Router();
 const data = require('../data');
 const usersData = data.users;
+const artworkData=data.artworks;
+const orderData=data.orders;
+const requestData=data.requests;
+const commisionData=data.commissions;
 const xss = require('xss');
 
 
@@ -163,10 +167,13 @@ router.post('/login', async (req, res) => {
 // GET profile page
 router.get('/private', async (req, res) => {
     try {
+        const level = await userData.checkUserLevel(req.session.user);
         const user=await usersData.getUser(req.session.user);
+        const orders= await orderData.getFromUser(user);
         res.render('users/profile', {username: req.session.user, firstName: user.firstName,
         lastName: user.lastName,email: user.email,pronouns: user.pronouns,age:user.age,city:user.city,state:user.state,
-        favoritesCount:user.favoritesCount,favoritedArt:user.favoritedArt,loggedIn: req.session.user!=null});
+        favoritesCount:user.favoritesCount,favoritedArt:user.favoritedArt,loggedIn: req.session.user!=null,isAdmin: level,
+        });
     } catch (error) {
         res.render('users/profile', {error: e, errorExists: true,loggedIn: req.session.user!=null}); 
     }    

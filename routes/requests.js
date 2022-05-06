@@ -68,7 +68,6 @@ router.get('/', async (req,res) => {
                 res.render('users/requestForm',{loggedIn: true}); // User-view
             } else {
                 const lister=await requestData.getAll();
-                console.log(lister);
                 res.render('users/requests',{requests:lister,loggedIn: true}); // Admin-view
             }
         } else {
@@ -83,18 +82,19 @@ router.get('/', async (req,res) => {
 router.post('/', async (req,res) => {
     if(req.session.user){
         try {
-            validateRequest(xss(req.body.name), xss(req.body.email), xss(req.body.address), xss(req.body.city), xss(req.body.state)
-            , xss(req.body.zip), xss(req.body.title), xss(req.body.description));
-        } catch (e) {
-            return res.render('users/requestForm', {error: e, errorExists: true,loggedIn: req.session.user!=null});
-        }
+            const level = await userData.checkUserLevel(req.session.user);
+            if (level) {
+                validateRequest(xss(req.body.name), xss(req.body.email), xss(req.body.address), xss(req.body.city), xss(req.body.state)
+                , xss(req.body.zip), xss(req.body.title), xss(req.body.description));
+                const user=await userData.getUser(req.session.user);
+                const create = await requestData.createRequest(user._id,xss(req.body.name), xss(req.body.email), xss(req.body.address), xss(req.body.city), xss(req.body.state)
+                , xss(req.body.zip), xss(req.body.title), xss(req.body.description));
+                if (create.requestInserted) {
+                    res.redirect('./');
+                }
+            }
+            else{
 
-        try {
-            const user=await userData.getUser(req.session.user);
-            const create = await requestData.createRequest(user._id,xss(req.body.name), xss(req.body.email), xss(req.body.address), xss(req.body.city), xss(req.body.state)
-            , xss(req.body.zip), xss(req.body.title), xss(req.body.description));
-            if (create.requestInserted) {
-                res.redirect('./');
             }
         } catch (e) {
             return res.render('users/requestForm', {error: e, errorExists: true,loggedIn: req.session.user!=null});
