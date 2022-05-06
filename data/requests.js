@@ -74,6 +74,13 @@ module.exports = {
 
         const requestCollection = await requests();
         
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+
+        today = mm + '/' + dd + '/' + yyyy;
+
         let newRequest = {
             userID: userID,
             name: name,
@@ -82,6 +89,7 @@ module.exports = {
             city: city,
             state: state,
             zip: zip,
+            commisionDate:today,
             title: title,
             description: description
         }

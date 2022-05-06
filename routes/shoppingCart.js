@@ -34,7 +34,7 @@ router.get('/', async (req, res) => {
       res.render('users/shoppingCart', {cartNotEmpty: cartNotEmpty, artworks: artThumbnails, subtotal: cart.subtotal,loggedIn: true});
     }
     else{
-      res.render('users/signup');
+      res.render('users/login');
     }
   } catch (e) {
     res.status(404);
