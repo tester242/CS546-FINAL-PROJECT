@@ -33,12 +33,11 @@ function validateRequest(id, title, desc) {
 router.get('/', async (req,res) => {
     try {
         if (req.session.user) {
-            console.log("here");
             const level = await userData.checkUserLevel(req.session.user);
             if (level) {
-                res.render('users/requestForm'); // User-view
+                res.render('users/requestForm',{loggedIn: true}); // User-view
             } else {
-                res.render('users/requests'); // Admin-view
+                res.render('users/requests',{loggedIn: true}); // Admin-view
             }
         } else {
             res.render('users/login');
@@ -53,16 +52,16 @@ router.post('/', async (req,res) => {
     try {
         validateRequest(xss(req.body.id), xss(req.body.title), xss(req.body.description));
     } catch (e) {
-        return res.render('users/requestForm', {error: e, errorExists: true});
+        return res.render('users/requestForm', {error: e, errorExists: true,loggedIn: req.session.user!=null});
     }
 
     try {
         const create = await requestData.createRequest(xss(req.body.id), xss(req.body.title), xss(req.body.description));
         if (create.requestInserted) {
-            res.redirect('/profile');
+            res.redirect('users/profile');
         }
     } catch (e) {
-        return res.render('users/requestForm', {error: e, errorExists: true});
+        return res.render('users/requestForm', {error: e, errorExists: true,loggedIn: req.session.user!=null});
     }
 });
 

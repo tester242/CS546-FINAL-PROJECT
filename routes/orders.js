@@ -13,12 +13,12 @@ router.get('/', async (req, res) => {
         if (req.session.user) {
             const level = await userData.checkUserLevel(xss(req.body.username));
             if (level) {
-                res.render('users/profile'); // User-view
+                res.render('users/profile',{loggedIn: true}); // User-view
             } else {
-                res.render('users/orders'); // Admin-view
+                res.render('users/orders',{loggedIn: true}); // Admin-view
             }
         } else {
-            res.render('users/login');
+            res.render('users/login',{loggedIn: true});
         }
     } catch (e) {
         return res.status(400).json(e);

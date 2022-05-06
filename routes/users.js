@@ -124,7 +124,7 @@ router.post('/signup', async (req, res) => {
         checkValidInputTotal(xss(req.body.username), xss(req.body.password), xss(req.body.confirmPassword), xss(req.body.firstName), xss(req.body.lastName), 
         xss(req.body.email), xss(req.body.pronouns), xss(req.body.age),xss(req.body.city), xss(req.body.state));
     } catch (e) {
-        return res.render('users/signup', {error: e, errorExists: true});
+        return res.render('users/signup', {error: e, errorExists: true,loggedIn: req.session.user!=null});
     }
 
     try {
@@ -134,7 +134,7 @@ router.post('/signup', async (req, res) => {
             res.redirect('/');
         }
     } catch (e) {
-        return res.render('users/signup', {error: e, errorExists: true});
+        return res.render('users/signup', {error: e, errorExists: true,loggedIn: req.session.user!=null});
     }
 });
 
@@ -143,7 +143,7 @@ router.post('/login', async (req, res) => {
     try {
         checkValidInput(xss(req.body.username), xss(req.body.password));
     } catch (e) {
-        return res.render('users/login', {error: e, errorExists: true});
+        return res.render('users/login', {error: e, errorExists: true,loggedIn: req.session.user!=null});
     }
 
     try {
@@ -153,10 +153,10 @@ router.post('/login', async (req, res) => {
             res.cookie("AuthCookie", {user: xss(req.body.username)});
             res.redirect('/private');
         } else {
-            res.render('users/login', {error: e, errorExists: true});
+            res.render('users/login', {error: e, errorExists: true,loggedIn: req.session.user!=null});
         }
     } catch (e) {
-        res.render('users/login', {error: e, errorExists: true}); 
+        res.render('users/login', {error: e, errorExists: true,loggedIn: req.session.user!=null}); 
     }
 });
 
@@ -166,9 +166,9 @@ router.get('/private', async (req, res) => {
         const user=await usersData.getUser(req.session.user);
         res.render('users/profile', {username: req.session.user, firstName: user.firstName,
         lastName: user.lastName,email: user.email,pronouns: user.pronouns,age:user.age,city:user.city,state:user.state,
-        favoritesCount:user.favoritesCount,favoritedArt:user.favoritedArt});
+        favoritesCount:user.favoritesCount,favoritedArt:user.favoritedArt,loggedIn: req.session.user!=null});
     } catch (error) {
-        res.render('users/profile', {error: e, errorExists: true}); 
+        res.render('users/profile', {error: e, errorExists: true,loggedIn: req.session.user!=null}); 
     }    
 });
 

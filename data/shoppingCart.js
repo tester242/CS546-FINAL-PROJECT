@@ -21,7 +21,7 @@ function stringChecker(str, variableName){
 function validateID(id, name){
     if(!id) throw 'must provide '+name;
     stringChecker(id,name);
-    if(!ObjectId.isValid(userId)) throw name+' is not a valid Object ID';
+    if(!ObjectId.isValid(id)) throw name+' is not a valid Object ID';
 }
 
 let exportedMethods={
@@ -29,13 +29,14 @@ let exportedMethods={
         return prices;
     },
     async createCart(userId) {
-        validateID(userId,"userId");
+        validateID(userId.toString(),"userId");
         const cartCollection= await shoppingCart();
         let newCart={
             artIds: [],
-            format:[],
+            format:[],//when adding art and formats in, check formats against prices, this can be gotten useing getMultipliers()
             userId: userId,
-            subtotal: 0
+            subtotal: 0,
+            purchased: 0
         }
         const insertCart = await cartCollection.insertOne(newCart);
 
@@ -43,16 +44,14 @@ let exportedMethods={
 
         return {cartInserted: true};
     },
-    async get(cartID){
-        validateID(cartId,"cartId");
-        
-        var newID=ObjectId(cartID);
+    async get(userID){
+        validateID(userID.toString(),"userId");
+        var newUserID=ObjectId(userID);
         
         const cartCollection= await shoppingCart();
-
-        const cart=await cartCollection.findOne({_id:newID});
-        if(cart==null) throw 'no cart with that ID';
-
+        
+        const cart=await cartCollection.findOne({userId:newUserID,purchased:0});
+        
         return cart;
     },
     //can add or subtract to the cart total based on the operation var
