@@ -5,37 +5,56 @@ const { ObjectId } = require('mongodb');
 
 const commissionFields = ['id', 'price'];
 
-function validate(att, field) {
-    if (!field) throw 'Error: Must provide a field to check.';
-    if (typeof field !== 'string') throw 'Error: Must provide a string for field.';
-    if (!(field in commissionFields)) throw `Error: ${field} is an invalid field.`;
-    if (!att) throw `Error: ${field} not given.`;
-    if (field === 'id') {
-        if (typeof att !== 'string') throw `Error: ${field} must be a string.`;
-        att = att.trim();
-        if (att.length == 0) throw `Error: ${field} cannot be an empty string.`;
-        if (!ObjectId.isValid(att)) throw 'Error: commissionID is not a valid Object ID.';
-    }
-    if (field === 'price') {
-        if (typeof att !== 'number') throw `Error: ${field} must be a number.`;
-        if (att < 0) throw `Error: ${field} cannot be less than 0.`;
-    }
+function validateID(id, name){
+    if(!id) throw 'must provide '+name;
+    stringChecker(id,name);
+    if(!ObjectId.isValid(id)) throw name+' is not a valid Object ID';
 }
 
-function validateCommission(request, price) {
-    validate(request, 'id');
-    validate(price, 'price');
+function stringChecker(str, variableName){
+    if(typeof str != 'string')throw `${variableName || 'provided variable'} is not a String`;
+    if(str.trim().length==0)throw 'Strings can not be empty';
 }
+
+function numChecker(num, variableName){
+    if(typeof num != 'string')throw `${variableName || 'provided variable'} can't be converted into a number`;
+    const newNum=Number(num);
+    if(!Number.isInteger(newNum))throw`${variableName || 'provided variable'} is not a number`;
+    if(newNum<=0)throw 'Numbers can not be less than or equal to zero';
+}
+
+
+// function validate(att, field) {
+//     if (!field) throw 'Error: Must provide a field to check.';
+//     if (typeof field !== 'string') throw 'Error: Must provide a string for field.';
+//     if (!(field in commissionFields)) throw `Error: ${field} is an invalid field.`;
+//     if (!att) throw `Error: ${field} not given.`;
+//     if (field === 'id') {
+//         if (typeof att !== 'string') throw `Error: ${field} must be a string.`;
+//         att = att.trim();
+//         if (att.length == 0) throw `Error: ${field} cannot be an empty string.`;
+//         if (!ObjectId.isValid(att)) throw 'Error: commissionID is not a valid Object ID.';
+//     }
+//     if (field === 'price') {
+//         if (typeof att !== 'number') throw `Error: ${field} must be a number.`;
+//         if (att < 0) throw `Error: ${field} cannot be less than 0.`;
+//     }
+// }
+
+// function validateCommission(request, price) {
+//     validate(request, 'id');
+//     validate(price, 'price');
+// }
 
 module.exports = {
     async createCommission(requestID, price) {
-        validateCommission(requestID, price);
+        validateID(requestID.toString(),"requestID");
+        numChecker(price);
 
-        var tempID = ObjectId(requestID.trim());
         var newPrice = price.toFixed(2);
         const commissionCollection = await commissions();
         const requestCollection = await requests();
-        const request = await requestCollection.findOne({ _id: tempID });
+        const request = await requestCollection.findOne({ _id: requestID });
         if (!request) throw 'Error: Cannot find request.'; // <<<
 
         let newCommission = {
