@@ -1,20 +1,25 @@
+{{#if errorExists}}
+    <p id="error">{{error}}</p>
+{{/if}}
+
+
 <article>
     <p id="usernameDisplay">{{username}}</p><br><br>
 
     <dl> 
-        <dt>First Name</dt> 
+        <dt>First Name</dt> <br>
         <dd>{{firstName}}</dd><br>
-        <dt>Last Name</dt> 
+        <dt>Last Name</dt> <br>
         <dd>{{lastName}}</dd><br>
-        <dt>Email</dt> 
+        <dt>Email</dt> <br>
         <dd>{{email}}</dd><br>
-        <dt>Pronouns</dt> 
+        <dt>Pronouns</dt> <br>
         <dd>{{pronouns}}</dd><br>
-        <dt>Age</dt> 
+        <dt>Age</dt> <br>
         <dd>{{age}}</dd><br>
-        <dt>City</dt> 
+        <dt>City</dt> <br>
         <dd>{{city}}</dd><br>
-        <dt>State</dt> 
+        <dt>State</dt> <br>
         <dd>{{state}}</dd><br>
 
         {{#if isAdmin}}
