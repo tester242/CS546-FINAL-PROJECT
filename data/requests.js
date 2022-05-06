@@ -115,7 +115,8 @@ module.exports = {
 
         const requestCollection = await requests();
 
-        const request = await requestCollection.findOne({ _id: userID });
+        const request = await requestCollection.find({ userID: userID }).toArray();
+        
 
         return request;
     },

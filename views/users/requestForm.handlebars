@@ -20,10 +20,9 @@
     <label id="title" for="title">Artwork Title:</label><br>
     <input type="text" id="title" name="title"><br><br>
 
-    <form action="/profile">
-        <label id="description" for="description">Description:</label><br>
-        <textarea id="desscription" name="description" rows="4" cols="50"></textarea>
-    </form><br>
+    
+    <label id="description" for="description">Description:</label><br>
+    <textarea id="desscription" name="description" rows="4" cols="50"></textarea><br>
 
     {{#if errorExists}}
         <p id="error">{{error}}</p>
