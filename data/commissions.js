@@ -6,7 +6,7 @@ const { getFromUser } = require('./requests');
 
 const commissionFields = ['id', 'price'];
 
-function validateIDID(id, name){
+function validateID(id, name){
     if(!id) throw 'must provide '+name;
     stringChecker(id,name);
     if(!ObjectId.isValid(id)) throw name+' is not a valid Object ID';

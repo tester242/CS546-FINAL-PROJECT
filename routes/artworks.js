@@ -13,9 +13,6 @@ router.get('/', async (req, res) => {
     if(req.session.user){
       const user=await userData.get(req.session.user);
       const level= user.checkUserLevel(req.session.user);
-      if(!level){
-          res.render('users/artworkForm', {title: "Artworks", artworks: artworks, loggedIn: req.session.user!=null});
-      }
       if (artworks==[]){
         res.render('users/artworks', {title: "Artworks", artworks: null, loggedIn: req.session.user!=null,isAdmin:!level});
       }

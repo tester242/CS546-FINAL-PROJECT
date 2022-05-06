@@ -11,11 +11,11 @@ const xss = require('xss');
 router.get('/', async (req, res) => {
     try {
         if (req.session.user) {
-            const level = await userData.checkUserLevel(xss(req.body.username));
+            const level = await userData.checkUserLevel(xss(req.session.user));
             if (level) {
                 res.render('users/profile',{loggedIn: true}); // User-view
             } else {
-                res.render('users/orders',{loggedIn: true}); // Admin-view
+                res.render('users/orders',{loggedIn: true,isAdmin: true}); // Admin-view
             }
         } else {
             res.render('users/login',{loggedIn: true});

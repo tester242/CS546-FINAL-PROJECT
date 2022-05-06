@@ -35,11 +35,11 @@ function validateCommission(request, price) {
 router.get('/', async (req,res) => {
     try {
         if (req.session.user) {
-            const level = await userData.checkUserLevel(xss(req.body.username));
+            const level = await userData.checkUserLevel(xss(req.session.user));
             if (level) {
                 res.render('users/requestForm',{loggedIn: true});
             } else {
-                res.render('users/commissions',{loggedIn: true});
+                res.render('users/commissions',{loggedIn: true,isAdmin:true});
             }
         }
     } catch (e) {

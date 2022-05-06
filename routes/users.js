@@ -171,7 +171,7 @@ router.get('/private', async (req, res) => {
         const user=await usersData.getUser(req.session.user);
         const orders= await orderData.getFromUser(user._id);
         const requests=await requestData.getFromUser(user._id);
-        const commissions=await commisionData.
+        const commissions=await commisionData.getFromUser(user._id);
         res.render('users/profile', {title: "Profile",username: req.session.user, firstName: user.firstName,
         lastName: user.lastName,email: user.email,pronouns: user.pronouns,age:user.age,city:user.city,state:user.state,
         favoritesCount:user.favoritesCount,favoritedArt:user.favoritedArt,loggedIn: req.session.user!=null,isAdmin: level==0,

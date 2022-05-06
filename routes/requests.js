@@ -68,10 +68,10 @@ router.get('/', async (req,res) => {
                 res.render('users/requestForm',{loggedIn: true}); // User-view
             } else {
                 const lister=await requestData.getAll();
-                res.render('users/requests',{requests:lister,loggedIn: true}); // Admin-view
+                res.render('users/requests',{requests:lister,loggedIn: true,isAdmin:true}); // Admin-view
             }
         } else {
-            res.render('users/login');
+            res.redirect("/");
         }
     } catch (e) {
         return res.status(400).json(e);
@@ -99,6 +99,9 @@ router.post('/', async (req,res) => {
         } catch (e) {
             return res.render('users/requestForm', {error: e, errorExists: true,loggedIn: req.session.user!=null});
         }
+    }
+    else{
+        res.redirect('/');
     }
 });
 
