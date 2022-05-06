@@ -122,6 +122,7 @@ module.exports = {
     },
 
     async getAll(){
+        
         const requestCollection = await requests();
 
         const requestList= await requestCollection.find({}).toArray();

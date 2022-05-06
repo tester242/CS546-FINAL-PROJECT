@@ -4,6 +4,22 @@
 
 <article>
     <p>These are all of the active commission requests accepted by Maggie.</p><br><br>
+
+    {{!-- FORM DOES NOT WORK
+            <div id="progress">
+                <div id="progress-bar"></div>
+                <ul id="progress-num">
+                    <li class="step active">Order Placed</li>
+                    <li class="step">Order Approved</li>
+                    <li class="step">Maggie's Working On It</li>
+                    <li class="step">Maggie's Finished!</li>
+                    <li class="step">Shipped</li>
+                </ul>
+            </div>
+
+            <button id="progress-prev" class="btn" disabled>Prev</button>
+            <button id="progress-next" class="btn">Next</button> --}}
+
     {{#each commissions}}
         <div class="commission">
             <dl> 
@@ -19,12 +35,16 @@
             <div id="progress">
                 <div id="progress-bar"></div>
                 <ul id="progress-num">
-                    <li class="step active">Approved</li>
-                    <li class="step">Work In Progress</li>
-                    <li class="step">Prepar</li>
-                    <li class="step"></li>
+                    <li class="step active">Order Placed</li>
+                    <li class="step">Order Approved</li>
+                    <li class="step">Maggie's Working On It</li>
+                    <li class="step">Maggie's Finished!</li>
+                    <li class="step">Shipped</li>
                 </ul>
             </div>
+
+            <button id="progress-prev" class="btn" disabled>Prev</button>
+            <button id="progress-next" class="btn">Next</button>
         </div>
     {{/each}}
 </article>

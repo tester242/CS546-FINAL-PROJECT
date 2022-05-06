@@ -84,7 +84,7 @@ module.exports = {
 
         const commissionCollection = await commissions();
 
-        const commission = await commissionCollection.findOne({ _id: userID });
+        const commission = await commissionCollection.find({ userID: userID });
         
         return commission;
     },
