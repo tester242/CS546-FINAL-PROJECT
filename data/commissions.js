@@ -7,7 +7,7 @@ const { getFromUser } = require('./requests');
 const commissionFields = ['id', 'price'];
 
 function validateID(id, name){
-    if(!id) throw 'must provide '+name;
+    if(!id) throw 'must provide an id';
     stringChecker(id,name);
     if(!ObjectId.isValid(id)) throw name+' is not a valid Object ID';
 }
@@ -78,13 +78,17 @@ module.exports = {
        
         return commission;
     },
-    //may return null, this is on purpose
+    /*gets all commissions of a user from the commission collection 
+    @param  userID: ObejctID
+    @return request, can be null
+    */
+    //make sure to check if the return value exists, its done purposefully this way
     async getFromUser(userID) {
         validateID(userID.toString(), 'id');
 
         const commissionCollection = await commissions();
 
-        const commission = await commissionCollection.find({ userID: userID });
+        const commission = await commissionCollection.find({ userID: userID }).toArray();
         
         return commission;
     },

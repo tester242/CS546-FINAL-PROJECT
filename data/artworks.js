@@ -28,7 +28,7 @@ function numChecker(num,numName){
 }
 
 function validateID(id, name){
-  if(!id) throw 'must provide '+name;
+  if(!id) throw 'must provide an id';
   stringChecker(id,name);
   if(!ObjectId.isValid(userId)) throw name+' is not a valid Object ID';
 }
@@ -96,7 +96,7 @@ module.exports = {
     if (!id){
       throw new Error('Id needs to be a valid value');
     }
-    validateID(id);
+    validateID(id,"artworkid");
     const artCollection = await artworks();
     const artList = await artCollection.find({}).toArray();
     for (artwork of artList){

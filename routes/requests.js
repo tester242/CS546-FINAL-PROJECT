@@ -4,9 +4,17 @@ const data = require('../data');
 const requestData = data.requests;
 const userData = data.users;
 const commissionData = data.commissions;
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
 const xss = require('xss');
 
+global.document = new JSDOM("http://localhost:3000/requests").window.document;
 
+function validateID(id, name){
+    if(!id) throw 'must provide an id';
+    stringChecker(id,name);
+    if(!ObjectId.isValid(id)) throw name+' is not a valid Object ID';
+}
 
 function stringChecker(str, variableName){
     if(typeof str != 'string')throw `${variableName || 'provided variable'} is not a String`;
@@ -93,8 +101,8 @@ router.post('/', async (req,res) => {
                     res.redirect('./');
                 }
             } else {
-                validateID(xss(req.body.requestID));
-                numChecker(xss(req.body.price));
+                validateID(xss(document.getElementByName("RequestID").value),"requestID");
+                numChecker(xss(req.body.price),"price");
                 const create = await commissionData.createCommission(xss(req.body.requestID), xss(req.body.price));
                 if (create.commissionInserted) {
                     res.redirect('./commissions')

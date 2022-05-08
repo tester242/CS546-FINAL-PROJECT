@@ -42,7 +42,7 @@ function numChecker(num, variableName){
 
 
 function validateID(id, name){
-    if(!id) throw 'must provide '+name;
+    if(!id) throw 'must provide an id';
     stringChecker(id,name);
     if(!ObjectId.isValid(id)) throw name+' is not a valid Object ID';
 }

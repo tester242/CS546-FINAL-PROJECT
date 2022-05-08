@@ -38,7 +38,7 @@ function emailChecker(email){
 @param name: String describes the id
 */
 function validateID(id, name){
-    if(!id) throw 'must provide '+name;
+    if(!id) throw 'must provide an id';
     stringChecker(id,name);
     if(!ObjectId.isValid(id)) throw name+' is not a valid Object ID';
 }
@@ -145,7 +145,7 @@ module.exports = {
 
         return request;
     },
-    /*gets a request from the request collection
+    /*gets all the request of a user from the request collection
     @param  userID: ObejctID
     @return request, can be null
     */
