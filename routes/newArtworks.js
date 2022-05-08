@@ -7,6 +7,16 @@ const commissionData = data.commissions;
 const xss = require('xss');
 
 
+function isValidHttpUrl(string) {
+    let url;
+    try {
+      url = new URL(string);
+    } catch (_) {
+      return false;  
+    }
+    return url.protocol === "http:" || url.protocol === "https:";
+  }
+
 function validateID(id, name){
     if(!id) throw 'must provide an id';
     stringChecker(id,name);
@@ -31,7 +41,9 @@ function validateRequest(name, tags, price, artImage, artVideo, description) {
     stringChecker(name,"name");
     stringChecker(tags,"tags");
     stringChecker(artImage,"image link");
+    isValidHttpUrl(artImage);
     stringChecker(artVideo,"art video");
+    isValidHttpUrl(artVideo);
     stringChecker(description,"description");
     numChecker(price,"price");
 

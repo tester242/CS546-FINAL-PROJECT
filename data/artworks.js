@@ -10,6 +10,15 @@ function stringChecker(str, variableName){
       throw 'Strings can not be empty';
   }
 }
+function isValidHttpUrl(string) {
+  let url;
+  try {
+    url = new URL(string);
+  } catch (_) {
+    return false;  
+  }
+  return url.protocol === "http:" || url.protocol === "https:";
+}
 function dateChecker(dt,dtName){
   if(! dt instanceof Date ){
     throw `${dtName || 'provided variable'} is not a date`;
@@ -39,7 +48,9 @@ function validateArtwork(name, tags, postedDate, price, artImage, artVideo, favo
   dateChecker(postedDate, 'postedDate');
   numChecker(price, 'price');
   stringChecker(artImage, 'artImage');
+  isValidHttpUrl(artImage);
   stringChecker(artVideo, 'artVideo');
+  isValidHttpUrl(artVideo);
   numChecker(favorites, 'favorites');
   numChecker(overallRating, 'overallRating');
   stringChecker(description, 'description');
