@@ -5,6 +5,7 @@
 
 const userRoutes = require('./users');
 const artRoutes = require('./artworks');
+const newArtRoutes = require('./newArtworks')
 const requestRoutes = require('./requests');
 const commissionRoutes = require('./commissions');
 const ordersRoutes = require('./orders');
@@ -14,6 +15,7 @@ const shoppingCartRoutes = require('./shoppingCart');
 const constructorMethod = (app) => {
     app.use('/', userRoutes);
     app.use('/artworks', artRoutes);
+    app.use('/newArtworks', newArtRoutes);
     app.use('/artwork', artRoutes);
     app.use('/requests', requestRoutes);
     app.use('/shoppingCart',shoppingCartRoutes);

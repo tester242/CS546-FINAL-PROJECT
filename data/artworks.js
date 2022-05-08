@@ -11,7 +11,7 @@ function stringChecker(str, variableName){
   }
 }
 function dateChecker(dt,dtName){
-  if(typeof dt != 'date'){
+  if(! dt instanceof Date ){
     throw `${dtName || 'provided variable'} is not a date`;
   }
   if(!(dt.getTime()===dt.getTime())){

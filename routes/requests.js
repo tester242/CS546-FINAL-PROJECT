@@ -4,11 +4,8 @@ const data = require('../data');
 const requestData = data.requests;
 const userData = data.users;
 const commissionData = data.commissions;
-const jsdom = require("jsdom");
-const { JSDOM } = jsdom;
 const xss = require('xss');
 
-global.document = new JSDOM("http://localhost:3000/requests").window.document;
 
 function validateID(id, name){
     if(!id) throw 'must provide an id';
