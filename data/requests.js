@@ -18,21 +18,41 @@ function numChecker(num, variableName){
     if(newNum<=0)throw 'Numbers can not be less than or equal to zero';
 }
 
+
 function zipChecker(zip){
     return isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(zip);
 }
 
+/*checks emails  to make sure theyre a valid objectID
+makes sure @ is in it and not the first index
+makes sure . is in it and not before the 2nd index
+@param email: String
+*/
 function emailChecker(email){
     stringChecker(email,'Email');
     if(email.indexOf('@')<=0||email.indexOf('.')<=2)throw 'Error: Email improperly formatted';
 }
 
+/*checks ID's  to make sure theyre a valid objectID
+@param id: String
+@param name: String describes the id
+*/
 function validateID(id, name){
     if(!id) throw 'must provide '+name;
     stringChecker(id,name);
     if(!ObjectId.isValid(id)) throw name+' is not a valid Object ID';
 }
-
+/*checks to make sure that all the variables are valid
+    @param  userID: ObejctID
+    @param  name: String
+    @param  email: String
+    @param  address: String
+    @param  city: String
+    @param  state: String
+    @param  zip: Number
+    @param  title: String
+    @param  description: String
+    */
 function validateRequest(userId,name, email, address, city, state, zip, title, description) {
     validateID(userId.toString(),"userId");
     if(!name||!email||!address||!city||!state||!zip||!title||!description)throw 'Error: all fields must be filled out';
@@ -70,6 +90,18 @@ function validateRequest(userId,name, email, address, city, state, zip, title, d
 // }
 
 module.exports = {
+    /*gets a request from the request collection
+    @param  userID: ObejctID
+    @param  name: String
+    @param  email: String
+    @param  address: String
+    @param  city: String
+    @param  state: String
+    @param  zip: Number
+    @param  title: String
+    @param  description: String
+    @return { requestInserted: true }
+    */
     async createRequest(userID,name, email, address, city, state, zip, title, description) {
         validateRequest(userID,name, email, address, city, state, zip, title, description);
 
@@ -99,6 +131,10 @@ module.exports = {
         if (insertRequest.insertedCount === 0) throw 'Error: Could not add new request.';
         return { requestInserted: true };
     },
+    /*gets a request from the request collection
+    @param  requestID: ObejctID
+    @return request, can be null
+    */
       //make sure to check if the return value exists, its done purposefully this way
     async get(requestID) {
         validateID(requestID.toString(),"requestId");
@@ -109,7 +145,11 @@ module.exports = {
 
         return request;
     },
-      //make sure to check if the return value exists, its done purposefully this way
+    /*gets a request from the request collection
+    @param  userID: ObejctID
+    @return request, can be null
+    */
+    //make sure to check if the return value exists, its done purposefully this way
     async getFromUser(userID) {
         validateID(userID.toString(),"userId");
 
@@ -121,6 +161,9 @@ module.exports = {
         return request;
     },
 
+    /*returns all the requests 
+    @return an array of alll the requests with their id's toString'd
+    */
     async getAll(){
         
         const requestCollection = await requests();
@@ -134,6 +177,10 @@ module.exports = {
         return requestList;
     },
 
+    /*deletes a request from a given requestID
+      @typedef requestID: ObjectID
+      @returns { requestRemoved: true }
+    */
     async remove(requestID) {
         validateID(requestId.toString(),"requestId")
 
