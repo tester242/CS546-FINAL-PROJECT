@@ -4,8 +4,6 @@ const users = mongoCollections.users;
 const { ObjectId } = require('mongodb');
 const requests = require('./requests');
 
-const orderFields = ['id', 'total', 'date'];
-
 // function validate (att, field) {
 //     if (!field) throw 'Error: Must provide a field to check.';
 //     if (typeof field !== 'string') throw 'Error: Must provide a string for field.';
@@ -80,7 +78,8 @@ function validateOrder(userID, cartID, total, date) {
     validateID(userID.toString(), 'userid');
     validateID(cartID.toString(), 'cartid');
     numChecker(total, 'total');
-    numCheckerS(date, 'date');
+    if (!date) throw 'Error: Must provide a date.';
+    if (!isValidDate(date)) throw 'Error: date is not a valid date string.';
 }
 
 module.exports = {

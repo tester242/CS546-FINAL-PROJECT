@@ -27,40 +27,22 @@ function numChecker(num,numName){
   }
 }
 
-const artworkFields = ['name', 'tags', 'postedDate', 'price', 'artImage', 'artVideo', 'favorites', 'overallRating', 'description', 'reviews'];
-
 function validateID(id, name){
   if(!id) throw 'must provide '+name;
   stringChecker(id,name);
   if(!ObjectId.isValid(userId)) throw name+' is not a valid Object ID';
 }
 
-function validate(att, field) {
-  if (!field) throw 'Error: Must provide a field to check.';
-  if (typeof field !== 'string') throw 'Error: Must provide a string for field.';
-  if (!(field in artworkFields)) throw `Error: ${field} is an invalid field.`;
-  if (!att) throw `Error: ${field} not given.`;
-  if (field === 'name'||field === 'description'||field === 'tags'||field === 'artImage'||field === 'artVideo') {
-    stringChecker(att, field);
-  }
-  if (field === 'postedDate') {
-    dateChecker(att, field);
-  }
-  if (field === 'price'||field === 'favorites'||field === 'overallRating') {
-    numChecker(att, field);
-  }
-}
-
 function validateArtwork(name, tags, postedDate, price, artImage, artVideo, favorites, overallRating, description) {
-  validate(name, 'name');
-  validate(tags, 'tags');
-  validate(postedDate, 'postedDate');
-  validate(price, 'price');
-  validate(artImage, 'artImage');
-  validate(artVideo, 'artVideo');
-  validate(favorites, 'favorites');
-  validate(overallRating, 'overallRating');
-  validate(description, 'description');
+  stringChecker(name, 'name');
+  stringChecker(tags, 'tags');
+  dateChecker(postedDate, 'postedDate');
+  numChecker(price, 'price');
+  stringChecker(artImage, 'artImage');
+  stringChecker(artVideo, 'artVideo');
+  numChecker(favorites, 'favorites');
+  numChecker(overallRating, 'overallRating');
+  stringChecker(description, 'description');
 }
 
 module.exports = {
