@@ -3,7 +3,7 @@ const router = express.Router();
 const data = require('../data');
 const requestData = data.requests;
 const userData = data.users;
-const commissionData=data.commissions;
+const commissionData = data.commissions;
 const xss = require('xss');
 
 
@@ -92,12 +92,16 @@ router.post('/', async (req,res) => {
                 if (create.requestInserted) {
                     res.redirect('./');
                 }
-            }
-            else{
-
+            } else {
+                validateID(xss(req.body.requestID));
+                numChecker(xss(req.body.price));
+                const create = await commissionData.createCommission(xss(req.body.requestID), xss(req.body.price));
+                if (create.commissionInserted) {
+                    res.redirect('./commissions')
+                }
             }
         } catch (e) {
-            return res.render('users/requestForm', {error: e, errorExists: true,loggedIn: req.session.user!=null});
+            return res.render('users/requestForm', {error: e, errorExists: true, loggedIn: req.session.user!=null});
         }
     }
     else{
