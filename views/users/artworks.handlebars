@@ -17,7 +17,7 @@
     {{#each artworks}}
         <div class="icon">
             <div class="iconInner">
-                <a href="/artwork/"+{{this.artID}}><img src={{this.artImage}} alt={{this.name}}></a>
+                <a href=("/artwork/"+{{this._id}})><img src={{this.artImage}} alt={{this.name}}></a>
                 <div class="artworkTitle">{{this.name}}</div>
             </div>
         </div>

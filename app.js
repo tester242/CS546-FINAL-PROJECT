@@ -39,9 +39,8 @@ app.use('/private', (req, res, next) => {
 
 app.use(async (req, res, next) => {
     let currentTimestamp = new Date().toUTCString();
-    let isAuthorized = req.cookies.ProjectSession ? "(Authenticated User)" : "(Non-Authenticated User)";
 
-    console.log(`[${currentTimestamp}]: ${req.method} ${req.originalUrl} ${isAuthorized}`);
+    console.log(`[${currentTimestamp}]: ${req.method} ${req.originalUrl}`);
     next();
 });
 

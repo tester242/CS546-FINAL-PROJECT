@@ -9,10 +9,12 @@ const xss = require('xss');
 // GET /
 router.get('/:id', async (req, res) => {
   if (!req.params.id){
+    console("oof");
     res.status(404);
     res.render('users/artwork', {title: "404 Error", error: "No artwork id given"});
   }
   try {
+    console.log("made it");
     const artwork = await artData.getArtwork(req.params.id);
     console.log(artwork);
     let hasVideo = true;

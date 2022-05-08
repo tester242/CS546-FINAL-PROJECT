@@ -72,7 +72,6 @@ router.get('/', async (req,res) => {
 router.post('/', async (req,res) => {
     if(req.session.user){
         try {
-            console.log("here");
             const level = await userData.checkUserLevel(req.session.user);
             if (!level) {
                 validateRequest(xss(req.body.name), xss(req.body.tags), xss(req.body.price), xss(req.body.artImage), xss(req.body.artVideo)
@@ -84,7 +83,6 @@ router.post('/', async (req,res) => {
                 today = mm + '/' + dd + '/' + yyyy;
                 const create = await artworkData.createArtwork(xss(req.body.name), xss(req.body.tags), new Date(today),Number(xss(req.body.price)), xss(req.body.artImage), xss(req.body.artVideo)
                 ,0,0, xss(req.body.description),[]);
-                console.log(create);
                 if (create.artInserted) {
                     res.redirect('./artworks');
                 }
