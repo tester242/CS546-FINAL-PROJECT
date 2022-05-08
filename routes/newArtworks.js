@@ -11,8 +11,8 @@ function isValidHttpUrl(string) {
     let url;
     try {
       url = new URL(string);
-    } catch (_) {
-      return false;  
+    } catch (e) {
+      throw e;  
     }
     return url.protocol === "http:" || url.protocol === "https:";
   }
