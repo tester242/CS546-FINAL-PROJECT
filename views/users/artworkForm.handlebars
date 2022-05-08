@@ -14,10 +14,9 @@
     <label id="price" for="price">Price:</label><br>
     <input type="number" id="price" name="price"><br><br>
 
-    <form action="/profile">
-        <label id="description" for="description">Description:</label><br>
-        <textarea id="description" name="description" rows="4" cols="50"></textarea>
-    </form><br>
+
+    <label id="description" for="description">Description:</label><br>
+    <textarea id="description" name="description" rows="4" cols="50"></textarea>
 
     {{#if errorExists}}
         <p id="error">{{error}}</p>
