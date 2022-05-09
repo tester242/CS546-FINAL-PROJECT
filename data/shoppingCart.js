@@ -9,6 +9,7 @@ const { ObjectId } = require('mongodb');
 //placeholder for pricing
 const prices={digital:1.0, print:1.8}
 
+//checks to see if a var str exists and if it is not empty
 function stringChecker(str, variableName){
     if(typeof str != 'string'){
         throw `${variableName || 'provided variable'} is not a String`;
@@ -18,6 +19,7 @@ function stringChecker(str, variableName){
     }
 }
 
+//checks to see if id(in the form of a string) is a valid objectid
 function validateID(id, name){
     if(!id) throw 'must provide an id';
     stringChecker(id,name);
@@ -28,6 +30,7 @@ let exportedMethods={
     getMultipliers(){
         return prices;
     },
+    //creates a cart for a given user
     async createCart(userId) {
         validateID(userId.toString(),"userId");
         const cartCollection= await shoppingCart();
@@ -44,6 +47,8 @@ let exportedMethods={
 
         return {cartInserted: true};
     },
+
+    //returns a cart that is attached to a user and has not been purchased yet
     async get(userID){
         validateID(userID.toString(),"userId");
         var newUserID=ObjectId(userID);

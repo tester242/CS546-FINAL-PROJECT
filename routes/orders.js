@@ -71,34 +71,35 @@ router.get('/', async (req, res) => {
         if (req.session.user) {
             const level = await userData.checkUserLevel(xss(req.session.user));
             if (level) {
-                res.render('users/profile',{loggedIn: true}); // User-view
+                const orders = await orderData.getFromUser(xss(req.session.user));
+                res.render('users/profile',{loggedIn: true, orders: orders}); // User-view
             } else {
-                const notifs=await notifData.getAll();
-                res.render('users/orders',{loggedIn: true,isAdmin: true,notifications:notifs}); // Admin-view
+                const notifs = await notifData.getAll();
+                const orders = await orderData.getAll();
+                res.render('users/orders',{loggedIn: true,isAdmin: true,orders: orders,notifications:notifs}); // Admin-view
             }
         } else {
             res.render('users/login',{loggedIn: true});
         }
     } catch (e) {
         res.status(400).json(e);
-
     }
 });
 
 // POST /
-router.post('/', async (req,res) => {
-    try {
-        if (req.session.user) {
-            validateOrder(xss(req.body.userID), xss(req.body.cartID), xss(req.body.total), xss(req.body.date));
-            const create = await orderData.createOrder(xss(req.body.userID), xss(req.body.cartID), xss(req.body.total), xss(req.body.date));
-            if (create.orderInserted) {
-                res.redirect('./');
-            }
-        }
-    } catch (e) {
-        res.status(400);
-        res.render('users/shoppingCart', {title: "400 Error", error: e, errorExists: true, loggedIn: req.session.user!=null});
-    }
-});
+// router.post('/', async (req,res) => {
+//     try {
+//         if (req.session.user) {
+//             validateOrder(xss(req.body.userID), xss(req.body.cartID), xss(req.body.total), xss(req.body.date));
+//             const create = await orderData.createOrder(xss(req.body.userID), xss(req.body.cartID), xss(req.body.total), xss(req.body.date));
+//             if (create.orderInserted) {
+//                 res.redirect('./');
+//             }
+//         }
+//     } catch (e) {
+//         res.status(400);
+//         res.render('users/shoppingCart', {title: "400 Error", error: e, errorExists: true, loggedIn: req.session.user!=null});
+//     }
+// });
 
 module.exports = router;

@@ -177,8 +177,19 @@ router.get('/private', async (req, res) => {
         favoritesCount:user.favoritesCount,favoritedArt:user.favoritedArt,loggedIn: req.session.user!=null,isAdmin: level==0,
         orders:orders,requests:requests, commissions:commissions});
     } catch (e) {
-        res.render('users/profile', {title: "Profile",error: e, errorExists: true,loggedIn: req.session.user!=null}); 
+        res.render('users/profile', {title: "Profile",error: e, errorExists: true,loggedIn: req.session.user!=null,isAdmin:true}); 
     }    
+});
+
+router.post('/private', async (req, res) => {
+    try{
+        checkValidUsername(xss(req.body.adminUsername));
+        await usersData.updateUserLevel(xss(req.body.adminUsername));
+        res.redirect('/private');
+    }catch(e){
+        res.render('users/profile', {title: "Profile",error: e, errorExists: true,loggedIn: req.session.user!=null,isAdmin:true}); 
+    }
+
 });
 
 // GET /logout

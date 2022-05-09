@@ -4,7 +4,7 @@
 
 <article>
     <h1 id="artName">{{name}}</h1>
-    <img alt={{name}} src={{artImage}}> 
+    <img width="auto" height="400" alt={{name}} src={{artImage}}> 
     {{#if hasVideo}}
         <iframe width="420" height="315" src={{artVideo}}></iframe>
     {{/if}}
@@ -17,8 +17,10 @@
         <dd>{{price}}</dd><br>
 
         {{!-- FORM DOES NOT WORK --}}
-        <form method="POST" id="buy-form" action="/cart">
-            <button type="button">Add to Shopping Cart</button><br>
+        <form method="POST" id="buy-form">
+            <label for="buy-form">
+                <button type="submit">Add to Shopping Cart</button>
+            </label><br>
         </form>
 
         <dt>Favorites</dt> 
@@ -32,13 +34,13 @@
         <dt>Rating</dt> 
         <dd>{{overallRating}}</dd><br>
 
-        <div class="rating">
+        {{!-- <div class="rating">
             <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label>
             <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label>
             <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label>
             <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label>
             <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label>
-        </div>
+        </div> --}}
 
         <dt>Tags</dt>
         <dd> 
@@ -57,9 +59,11 @@
             {{#if reviews}}
             <ul> 
                 {{#each reviews}}
-                    <li>{{this.name}}</li> 
-                    <li>{{this.rating}}</li> 
-                    <li>{{this.review}}</li> 
+                    <li>
+                        <h3>{{this.name}}:<h6>
+                        Rating: {{this.rating}}<br>
+                        Review: <p>{{this.review}}</p>
+                    </li> 
                 {{/each}}
             </ul> 
             {{else}}
@@ -67,13 +71,19 @@
             {{/if}}   
         </dd> 
 
-        {{!-- FORM DOES NOT WORK --}}
-        <form method="POST" id="review-form" action="/artwork">
+        <form method="POST" id="review-form">
             <label for="review-form">
-                Leave a Review:
-                <textarea id="review" name="review" rows="4" cols="50"></textarea>
+                Leave a Review:<br>
+                <textarea id="review" name="review" rows="4" cols="50"></textarea><br>
+                <div id="reviewRating">
+                    <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label>
+                    <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label>
+                    <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label>
+                    <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label>
+                    <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label>
+                </div>
+                <button type="submit">Submit Review</button>
             </label><br>
-            <button type="button">Submit Review</button>
         </form><br>
 
     </dl>

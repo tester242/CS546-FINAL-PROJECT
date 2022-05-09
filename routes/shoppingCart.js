@@ -4,6 +4,7 @@ const data = require('../data');
 const userData= data.users;
 const cartData = data.shoppingCart;
 const artData = data.artwork;
+const orderData = data.orders;
 
 function stringChecker(str, variableName){
   if(typeof str != 'string'){
@@ -59,7 +60,31 @@ router.get('/', async (req, res) => {
 });
 
 router.put('/', async (req,res) => {
-  
-})
+  if (!req.params.id){
+    res.status(404);
+    res.render('users/shoppingCart', {title: "404 Error", errorExists:true, error: "No shoppingCart id given",loggedIn: req.session.user!=null});
+  }
+
+  try {
+    const user = await userData.getUser(req.session.user);
+    var cart = await cartData.get(user._id);
+    if (!cart) {
+      cart = await cartData.createCart(user._id);
+    }
+    if (cart.artIDs.length !== 0) {
+      const create = orderData.createOrder(user._id, cart._id, cart.subtotal)
+      if (create.orderInserted) {
+        cart.purchased = 1;
+        await cartData.createCart(user._id);
+      }
+    } else {
+      res.render('users/shoppingCart');
+    }
+    
+  } catch (e) {
+    res.status(404)
+    res.render('users/shoppingCart', {title: "404 Error", error: e, errorExists: true, loggedIn: req.session.user!= null });
+  }
+});
 
 module.exports = router;

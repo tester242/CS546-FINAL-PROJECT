@@ -2,12 +2,14 @@ const mongoCollections = require('../config/mongoCollections');
 const notifications = mongoCollections.notifications;
 const { ObjectId } = require('mongodb');
 
+//checks to make sure a given var str is a valid string and not empty
 function stringChecker(str, variableName){
     if(typeof str != 'string')throw `${variableName || 'provided variable'} is not a String`;
     if(str.trim().length==0)throw 'Strings can not be empty';
 }
 
 module.exports = {
+    //creates a notification based off of a given message
     async createNotification(message) {
         stringChecker(message);
 
@@ -29,6 +31,7 @@ module.exports = {
         return { notificationInserted: true };
     },
 
+    //retruns a notification based off of a given objectID
     async get(notifID) {
         validate(notifID, 'id');
 
@@ -42,6 +45,7 @@ module.exports = {
         return notification;
     },
 
+    //gets all the notifications in the system and deletes those not from today
     async getAll() {
 
         var today = new Date();
@@ -65,6 +69,7 @@ module.exports = {
         return notification;
     },
 
+    //removes a specified notification with a given objectID
     async remove(notifID) {
         validate(notifID, 'id');
 
@@ -77,6 +82,7 @@ module.exports = {
 
         return { notificationRemoved: true};
     },
+    //removes all the notifications not from today
     async removeAll() {
         
         var today = new Date();
@@ -91,8 +97,9 @@ module.exports = {
         
         const removeNotification = await notifCollection.deleteMany({});
 
+        insertNotification.insertedCount=0;
         for(let i=0;i<notifications.length;i++){
-            const insertNotification = await notifCollection.insertOne(notifications[i]);
+            insertNotification = await notifCollection.insertOne(notifications[i]);
         }
         if (insertNotification.insertedCount === 0) throw 'Error: Could not add new notification.';
 

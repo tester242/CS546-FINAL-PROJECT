@@ -11,6 +11,9 @@
             <dt>Price</dt>
             <dd>{{this.price}}</dd>        
         {{/each}}
+        <form method="POST" id="purchase-form" action="/cart">
+        <button type="button">Purchase</button><br>
+        </form>
     {{else}}
         Cart Is Empty
     {{/if}}
@@ -19,9 +22,9 @@
 <p>Subtotal: {{subtotal}}<p>
 
 {{!-- FORM DOES NOT WORK --}}
-<form method="POST" id="purchase-form" action="/cart">
+{{!-- <form method="POST" id="purchase-form" action="/cart">
     <button type="button">Purchase</button><br>
-</form>
+</form> --}}
 
 {{!-- USE AJAX TO UNHIDE THIS WHEN PURCHASED --}}
 <div id="thank-you" hidden>

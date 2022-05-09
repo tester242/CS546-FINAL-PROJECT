@@ -7,11 +7,13 @@ const { getFromUser } = require('./orders');
 
 const requestFields = ['id', 'title', 'desc'];
 
+//checks if a given var str is a valid non-empty string
 function stringChecker(str, variableName){
     if(typeof str != 'string')throw `${variableName || 'provided variable'} is not a String`;
     if(str.trim().length==0)throw 'Strings can not be empty';
 }
 
+//checks to see if num is a valid num
 function numChecker(num, variableName){
     if(typeof num != 'string')throw `${variableName || 'provided variable'} can't be converted into a number`;
     const newNum=Number(num);
@@ -19,7 +21,8 @@ function numChecker(num, variableName){
     if(newNum<=0)throw 'Numbers can not be less than or equal to zero';
 }
 
-
+//checks to see if a given zip is a valid zipcode
+//found using stackOverflow
 function zipChecker(zip){
     return isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(zip);
 }

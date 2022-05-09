@@ -24,6 +24,7 @@ const requests = require('./requests');
 //         if (!isValidDate(att)) throw `Error: ${field} must be a valid date string MM/DD/YYYY.`;
 //     }
 // }
+//checks to see if the given var str is a valid string and not empty
 function stringChecker(str, variableName){
     if(typeof str != 'string'){
         throw `${variableName || 'provided variable'} is not a String`;
@@ -32,7 +33,7 @@ function stringChecker(str, variableName){
         throw 'Strings can not be empty';
     }
 }
-
+//checks to see if a given var num(int the form of a string) is a valid number
 function numChecker(num, variableName){
     if(typeof num != 'string')throw `${variableName || 'provided variable'} can't be converted into a number`;
     const newNum=Number(num);
@@ -40,7 +41,7 @@ function numChecker(num, variableName){
     if(newNum<=0)throw 'Numbers can not be less than or equal to zero';
 }
 
-
+//checks to see if a given id(in the form of a string) is a valid objectID
 function validateID(id, name){
     if(!id) throw 'must provide an id';
     stringChecker(id,name);
@@ -74,6 +75,7 @@ function isValidDate(dateString) {
 };
 // End StackOverFlow isValidDate
 
+//checks to see if the paramters given to createOrder are valid
 function validateOrder(userID, cartID, total, date) {
     validateID(userID.toString(), 'userid');
     validateID(cartID.toString(), 'cartid');
@@ -83,19 +85,29 @@ function validateOrder(userID, cartID, total, date) {
 }
 
 module.exports = {
-    async createOrder(userID, cartID, total, dateSubmitted) {
-        validateOrder(userID, cartID, total, dateSubmitted);
+    //creates an order with a userID, CartID, and total
+    //takes info from user to add to other fields
+    //also adds the date it was created
+    async createOrder(userID, cartID, total) {
+        validateOrder(userID, cartID, total);
 
         const orderCollection = await orders();
         const userCollection = await users();
         const user = await userCollection.findOne({ _id: ObjectId(userID.trim()) });
         if(!user) throw 'Error: Cannot find user.'; // <<<
 
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+
+        today = mm + '/' + dd + '/' + yyyy;
+
         let newOrder = {
             userID: userID,
             cartID: cartID,
             total: total,
-            dateSubmitted: dateSubmitted,
+            dateSubmitted: today,
             address: user.address,
             city: user.city,
             state: user.state,
@@ -106,8 +118,9 @@ module.exports = {
         if (insertOrder.insertedCount === 0) throw 'Error: Could not add new order.';
         return { orderInserted: true };
     },
-
-      //make sure to check if the return value exists, its done purposefully this way
+    
+    //returns an order with a given orderID(in the form of an objectID)
+    //make sure to check if the return value exists, its done purposefully this way
     async get(orderID) {
         validateID(orderID.toString(), 'orderId');
 
@@ -117,17 +130,30 @@ module.exports = {
 
         return order;
     },
+
+    //gets all the orders in the system
+    async getAll() {
+        const orderCollection = await orders();
+        const orderList = await orderCollection.find({}).toArray();
+        if (orderList) {
+            return orderList;
+        }
+        throw new Error('Could not get all orders');
+    },
+
+    //returns orders with a given userID(in the form of an objectID)
     //make sure to check if the return value exists, its done purposefully this way
     async getFromUser(userID) {
         validateID(userID.toString(), 'orderId');
 
         const orderCollection = await orders();
 
-        const order = await orderCollection.findOne({ userID: userID});
-
-        return order;
+        const orderList = await orderCollection.find({ userID: userID }).toArray();
+        if (orderList) return orderList;
+        throw new Error('Could not get all orders from user.');
     },
 
+    //removes an order with a given orderID(in the form of an objectID)
     async remove(orderID) {
         validateID(orderID, 'id');
 

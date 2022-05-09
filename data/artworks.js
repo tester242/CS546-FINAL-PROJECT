@@ -2,6 +2,7 @@ const mongoCollections = require('../config/mongoCollections');
 const artworks = mongoCollections.artworks;
 const { ObjectId } = require('mongodb');
 
+//checks to see if a var str exists and if it is not empty
 function stringChecker(str, variableName){
   if(typeof str != 'string'){
       throw `${variableName || 'provided variable'} is not a String`;
@@ -10,6 +11,7 @@ function stringChecker(str, variableName){
       throw 'Strings can not be empty';
   }
 }
+//checks to see if the string is a valid url
 function isValidHttpUrl(string) {
   let url;
   try {
@@ -19,6 +21,7 @@ function isValidHttpUrl(string) {
   }
   return url.protocol === "http:" || url.protocol === "https:";
 }
+//checks to see if dt is a valid date
 function dateChecker(dt,dtName){
   if(! dt instanceof Date ){
     throw `${dtName || 'provided variable'} is not a date`;
@@ -27,6 +30,7 @@ function dateChecker(dt,dtName){
       throw 'Date is invalid';
   }
 }
+//checks to see if num is a valid num
 function numChecker(num,numName){
   if(typeof num != 'number'){
     throw `${numName || 'provided variable'} is not a number`;
@@ -36,12 +40,14 @@ function numChecker(num,numName){
   }
 }
 
+//checks to see if id(in the form of a string) is a valid objectid
 function validateID(id, name){
   if(!id) throw 'must provide an id';
   stringChecker(id,name);
   if(!ObjectId.isValid(id)) throw name+' is not a valid Object ID';
 }
 
+//checks the parameters for creating an artwork and sees if they are valid
 function validateArtwork(name, tags, postedDate, price, artImage, artVideo, favorites, overallRating, description) {
   stringChecker(name, 'name');
   stringChecker(tags, 'tags');
@@ -57,6 +63,7 @@ function validateArtwork(name, tags, postedDate, price, artImage, artVideo, favo
 }
 
 module.exports = {
+  //creates an artwork and checks to see if its properly inserted
   async createArtwork(name, tags, postedDate, price, artImage, artVideo, favorites, overallRating, description, reviews){
     validateArtwork(name, tags, postedDate, price, artImage, artVideo, favorites, overallRating, description);
     
@@ -93,9 +100,10 @@ module.exports = {
     return {artInserted: true};
   },
 
+  //makes sure the subdocument of reviews from artwork is valid
   checkReviews(reviews){
     for(let x=0;x<reviews.length;x++){
-      validateID(reviews[x].id.toString(),"reviews ID at index "+x);
+      validateID(reviews[x]._id.toString(),"reviews ID at index "+x);
       if(!reviews[x].name) throw 'review at index '+x+' does not have a name';
       stringChecker(reviews[x].name,"reviews name at index "+x);
       if(!reviews[x].rating) throw 'review at index '+x+' does not have a rating';
@@ -105,30 +113,28 @@ module.exports = {
     }
   },
 
-  async updateReviews(id, review){
+  //updates the reviews for an artwork
+  async updateReviews(id, name, rating, review){
     var artwork = await this.getArtwork(id);
+    rating = parseInt(rating);
 
-    this.checkReviews([review]);
+    // console.log("Name: "+name);
+    // console.log("Rating: "+rating);
+    var fullReview = {
+      _id: new ObjectId(),
+      name: name,
+      rating: rating,
+      review: review
+    }
+    this.checkReviews([fullReview]);
 
-    var existingReviews = artwork["reviews"];
-    existingReviews.append(review);
-    console.log(existingReviews);
+    artwork["overallRating"] = ((artwork["overallRating"]*artwork["reviews"].length)+rating)/(artwork["reviews"].length+1);
+    artwork["reviews"] = artwork["reviews"].concat([fullReview]);
 
-    const updatedArt = {
-      name: artwork["name"],
-      tags: artwork["tags"],
-      postedDate:	artwork["postedDate"],
-      price: artwork["price"],
-      artImage:	artwork["artImage"],
-      artVideo: artwork["artVideo"],
-      favorites: artwork["favorites"],
-      overallRating: artwork["overallRating"],
-      description: artwork["description"],
-      reviews: existingReviews
-    };
+    const artCollection = await artworks();
     const updatedInfo = await artCollection.updateOne(
       { _id: ObjectId(id) },
-      { $set: updatedArt }
+      { $set: artwork }
     );
     if (updatedInfo.modifiedCount === 0) {
       throw new Error('Could not update reviews successfully');
@@ -136,6 +142,7 @@ module.exports = {
     return await this.getArtwork(id);
   },
 
+  //gets an artwork with a given objectID
   async getArtwork(id){
     if (!id){
       throw new Error('Id needs to be a valid value');
@@ -148,6 +155,7 @@ module.exports = {
     return art;
   },
 
+  //returns all artworks
   async getAllArtworks(){
     const artCollection = await artworks();
     const artList = await artCollection.find({}).toArray();

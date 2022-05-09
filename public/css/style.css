@@ -209,7 +209,6 @@ body {
 }
 
 
-
 /* RATING */
 .rating {
     display: flex;
@@ -302,4 +301,4 @@ body {
     border-color: #C97C5D;
     background-color: #C97C5D;
     color: #fff;
-  }
+}

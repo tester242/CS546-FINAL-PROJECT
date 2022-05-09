@@ -6,17 +6,20 @@ const { getFromUser } = require('./requests');
 
 const commissionFields = ['id', 'price'];
 
+//checks to see if the var id(given in the form of a string) is a valid object id
 function validateID(id, name){
     if(!id) throw 'must provide an id';
     stringChecker(id,name);
     if(!ObjectId.isValid(id)) throw name+' is not a valid Object ID';
 }
 
+//checks to see if a given variable is a valid string
 function stringChecker(str, variableName){
     if(typeof str != 'string')throw `${variableName || 'provided variable'} is not a String`;
     if(str.trim().length==0)throw 'Strings can not be empty';
 }
 
+//checks to see if a given var num(given in the form of a string) is a valid number
 function numChecker(num, variableName){
     if(typeof num != 'string')throw `${variableName || 'provided variable'} can't be converted into a number`;
     const newNum=Number(num);
@@ -48,6 +51,7 @@ function numChecker(num, variableName){
 // }
 
 module.exports = {
+    //creates a commission from a request and a price
     async createCommission(requestID, price) {
         validateID(requestID.toString(),"requestID");
         numChecker(price);
@@ -68,6 +72,7 @@ module.exports = {
         if (insertCommission.insertedCount === 0) throw 'Error: Could not add new commission.';
         return { commissionInserted: true };
     },
+    //returns a commission  from a given commissionID(in the form of an objectID)
     //may return null, this is on purpose
     async get(commissionID) {
         validateID(commissionID.toString(), 'id');
@@ -93,6 +98,7 @@ module.exports = {
         return commission;
     },
 
+    //removes a commission using a given commissionID(in the form of an objectID)
     async remove(commissionID) {
         validateID(commissionID.toString(), 'id');
 
@@ -103,6 +109,7 @@ module.exports = {
         return { commissionRemoved: true };
     },
     
+    //updates a given commissions field with a sepcified value
     async update(commissionID, field, val) {
         validateID(commissionID.toString(), 'id');
         const commissionCollection = await commissions();
