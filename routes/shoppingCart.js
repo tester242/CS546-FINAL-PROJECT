@@ -5,6 +5,21 @@ const userData= data.users;
 const cartData = data.shoppingCart;
 const artData = data.artwork;
 
+function stringChecker(str, variableName){
+  if(typeof str != 'string'){
+      throw `${variableName || 'provided variable'} is not a String`;
+  }
+  if(str.trim().length==0){
+      throw 'Strings can not be empty';
+  }
+}
+
+function validateID(id, name){
+  if(!id) throw 'must provide an id';
+  stringChecker(id,name);
+  if(!ObjectId.isValid(id)) throw name+' is not a valid Object ID';
+}
+
 // ROUTES //
 
 // GET /
@@ -42,5 +57,9 @@ router.get('/', async (req, res) => {
     res.render('users/shoppingCart', {title: "404 Error", error: e, errorExists:true,loggedIn: req.session.user!=null});
   }
 });
+
+router.put('/', async (req,res) => {
+  
+})
 
 module.exports = router;

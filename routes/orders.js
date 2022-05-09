@@ -3,6 +3,7 @@ const router = express.Router();
 const data = require('../data');
 const orderData = data.orders;
 const userData = data.users;
+const notifData = data.notifications;
 const xss = require('xss');
 
 function stringChecker(str, variableName){
@@ -72,7 +73,8 @@ router.get('/', async (req, res) => {
             if (level) {
                 res.render('users/profile',{loggedIn: true}); // User-view
             } else {
-                res.render('users/orders',{loggedIn: true,isAdmin: true}); // Admin-view
+                const notifs=await notifData.getAll();
+                res.render('users/orders',{loggedIn: true,isAdmin: true,notifications:notifs}); // Admin-view
             }
         } else {
             res.render('users/login',{loggedIn: true});

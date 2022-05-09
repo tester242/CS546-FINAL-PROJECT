@@ -60,6 +60,9 @@ module.exports = {
   async createArtwork(name, tags, postedDate, price, artImage, artVideo, favorites, overallRating, description, reviews){
     validateArtwork(name, tags, postedDate, price, artImage, artVideo, favorites, overallRating, description);
     
+    if(artVideo.indexOf('watch')!=-1){
+      artVideo.replace('watch','embed');
+    }
     if(reviews.length>0){
       this.checkReviews(reviews);
     }
@@ -92,7 +95,7 @@ module.exports = {
 
   checkReviews(reviews){
     for(let x=0;x<reviews.length;x++){
-      validateID(reviews[x].id.toString,"reviews ID at index "+x);
+      validateID(reviews[x].id.toString(),"reviews ID at index "+x);
       if(!reviews[x].name) throw 'review at index '+x+' does not have a name';
       stringChecker(reviews[x].name,"reviews name at index "+x);
       if(!reviews[x].rating) throw 'review at index '+x+' does not have a rating';
@@ -103,7 +106,7 @@ module.exports = {
   },
 
   async updateReviews(id, review){
-    var artwork = this.getArtwork(id);
+    var artwork = await this.getArtwork(id);
 
     this.checkReviews([review]);
 
@@ -130,18 +133,16 @@ module.exports = {
     if (updatedInfo.modifiedCount === 0) {
       throw new Error('Could not update reviews successfully');
     }
+    return await this.getArtwork(id);
   },
 
   async getArtwork(id){
-    console.log("wait");
     if (!id){
       throw new Error('Id needs to be a valid value');
     }
     validateID(id.toString(),"artworkid");
-    console.log("got here");
     const artCollection = await artworks();
     const art = await artCollection.findOne({ _id: ObjectId(id) });
-    console.log("what about now");
     
     if(!art)throw new Error('Could not find artwork with given id');
     return art;

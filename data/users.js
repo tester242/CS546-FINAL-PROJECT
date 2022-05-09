@@ -55,7 +55,7 @@ const checkValidUsername = function checkValidUsername(str) {
         console.log("this is the string "+str+"!");
         throw `Error: Username must be at least 4 characters long.`;
     } 
-    if (!isAlphaNumeric(str)) throw 'Error: Username must only contain alphanumeric characters.';
+    // if (!isAlphaNumeric(str)) throw 'Error: Username must only contain alphanumeric characters.';
 }
 
 const checkValidPassword = function checkValidPassword(str) {

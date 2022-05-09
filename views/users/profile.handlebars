@@ -26,6 +26,7 @@
             <input type="text" id="adminUsername" name="adminUsername"><br><br>
             <button type="submit">Submit</button><br><br><br>
         </form>
+        {{/if}}
 
 
         {{#unless isAdmin}}
@@ -95,5 +96,5 @@
 <footer>
     {{#if loggedIn}}
     <a href="/logout">Logout</a>
-     {{/if}}
+    {{/if}}
 </footer>

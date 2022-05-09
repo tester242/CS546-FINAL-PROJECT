@@ -3,6 +3,7 @@ const router = express.Router();
 const data = require('../data');
 const artworkData = data.artworks;
 const userData = data.users;
+const notifData = data.notifications;
 const commissionData = data.commissions;
 const xss = require('xss');
 
@@ -58,7 +59,8 @@ router.get('/', async (req,res) => {
             if (level) {
                 res.render('users/requestForm',{loggedIn: true}); // User-view
             } else {
-                res.render('users/artworkForm',{loggedIn: true,isAdmin:true}); // Admin-view
+                const notifs=await notifData.getAll();
+                res.render('users/artworkForm',{loggedIn: true,isAdmin:true,notifcations:notifs}); // Admin-view
             }
         } else {
             res.redirect("/");

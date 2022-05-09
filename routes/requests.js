@@ -3,6 +3,7 @@ const router = express.Router();
 const data = require('../data');
 const requestData = data.requests;
 const userData = data.users;
+const notifData= data.notifications;
 const commissionData = data.commissions;
 const xss = require('xss');
 

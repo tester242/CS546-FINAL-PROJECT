@@ -57,7 +57,7 @@ const checkValidUsername = function checkValidUsername(str) {
     if (typeof str != 'string') throw `Error: Username must be a string.`;
     if (str.indexOf(' ')!=-1) throw 'Error: Username must not contain spaces.';
     if (str.trim().length < 4) throw `Error: Username must be at least 4 characters long.`;
-    if (!isAlphaNumeric(str)) throw 'Error: Username must only contain alphanumeric characters.';
+    //if (!isAlphaNumeric(str)) throw 'Error: Username must only contain alphanumeric characters.';
 }
 
 const checkValidPassword = function checkValidPassword(str) {

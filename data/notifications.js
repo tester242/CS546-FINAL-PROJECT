@@ -52,13 +52,14 @@ module.exports = {
         const notifCollection = await notifications();
 
         const notification = await notifCollection.find({}).toArray();
-        if(notification){
+        if(notification === undefined || notification.length > 0){
+            console.log(notification);
             if(notification[0].dateSent!=today){
                 removeAll();
             }
-        }
-        for(let i=0; i<requestList.length;i++){
-            notification[i]._id=notification[i]._id.toString();
+            for(let i=0; i<requestList.length;i++){
+                notification[i]._id=notification[i]._id.toString();
+            }
         }
 
         return notification;

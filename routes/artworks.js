@@ -14,7 +14,10 @@ router.get('/', async (req, res) => {
     const artworks = await artData.getAllArtworks();
     if(req.session.user){
       const level= await userData.checkUserLevel(req.session.user);
-      const notifs=notifData.getAll();
+      notifs=[];
+      if(level==0){
+        notifs=await notifData.getAll();
+      }
       if (artworks==[]){
         res.render('users/artworks', {title: "Artworks", artworks: null, loggedIn: true,isAdmin:level==0,notifications:notifs});
       }
@@ -40,9 +43,15 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   if (!req.params.id){
     res.status(404);
-    res.render('users/artwork', {title: "404 Error", errorExists:true, error: "No artwork id given"});
+    res.render('users/artwork', {title: "404 Error", errorExists:true, error: "No artwork id given",loggedIn: req.session.user!=null});
   }
   try {
+    var notifs=[];
+    var level=0;
+    if(req.session.user){
+      notifs=await notifData.getAll();
+      level=await userData.getUser(req.session.user); 
+    }
     const artwork = await artData.getArtwork(xss(req.params.id));
     let hasVideo = true;
     let a = Array(10);
@@ -73,15 +82,26 @@ router.get('/:id', async (req, res) => {
         a[i] = "N/A";
       }
     }
-    res.render('users/artwork', {title: "Artwork",name: a[0], tags: a[1], postedDate: a[2], price: a[3], artImage: a[4], hasVideo: hasVideo, artVideo: a[5], favorites: a[6], overallRating: a[7], description: a[8], reviews: a[9]});
+    res.render('users/artwork', {title: "Artwork",name: a[0], tags: a[1], postedDate: a[2], price: a[3], artImage: a[4], hasVideo: hasVideo, artVideo: a[5], 
+    favorites: a[6], overallRating: a[7], description: a[8], reviews: a[9],loggedIn: req.session.user!=null,isAdmin:level==0,notifications:notifs});
   } catch (e) {
     res.status(404);
-    res.render('users/artwork', {title: "404 Error", errorExists:true, error: e});
+    res.render('users/artwork', {title: "404 Error", errorExists:true, error: e,loggedIn: req.session.user!=null});
   }
 });
 
-// router.put('/:id', async (req, res) => {
-
-// };
+router.put('/:id', async (req, res) => {
+  if (!req.params.id){
+    res.status(404);
+    res.render('users/artwork', {title: "404 Error", errorExists:true, error: "No artwork id given",loggedIn: req.session.user!=null});
+  }
+  try {
+    var updatedArt = await artData.updateReviews(xss(req.params.id),xss(req.body.review));
+    res.redirect("/"+req.params.id);
+  } catch (e) {
+    res.status(404);
+    res.render('users/artwork', {title: "404 Error", errorExists:true, error: e,loggedIn: req.session.user!=null});
+  }
+});
 
 module.exports = router;

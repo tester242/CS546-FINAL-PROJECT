@@ -3,6 +3,7 @@ const router = express.Router();
 const data = require('../data');
 const commissionData = data.commissions;
 const userData = data.users;
+const notifData=data.notifications;
 const xss = require('xss');
 
 const commissionFields = ['id', 'price'];
@@ -36,10 +37,14 @@ router.get('/', async (req,res) => {
     try {
         if (req.session.user) {
             const level = await userData.checkUserLevel(xss(req.session.user));
+            notifs=[];
+            if(level==0){
+                notifs= await notifData.getAll();
+            }
             if (level) {
                 res.render('users/requestForm', {title: "Request Commission", loggedIn: true});
             } else {
-                res.render('users/commissions', {title: "Active Commissions", loggedIn: true,isAdmin:true});
+                res.render('users/commissions', {title: "Active Commissions", loggedIn: true,isAdmin:true,notifications:notifs});
             }
         }
     } catch (e) {
