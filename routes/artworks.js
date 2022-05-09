@@ -47,7 +47,7 @@ router.get('/:id', async (req, res) => {
   }
   try {
     var notifs=[];
-    var level=0;
+    var level=1;
     if(req.session.user){
       notifs=await notifData.getAll();
       level=await userData.getUser(req.session.user); 
@@ -97,7 +97,11 @@ router.post('/:id', async (req, res) => {
     res.render('users/artwork', {title: "404 Error", errorExists:true, error: "No artwork id given"});
   }
   try {
-    var updatedArt = await artData.updateReviews(xss(req.params.id),req.session.user,xss(req.body.rating),xss(req.body.review));
+    var name = req.session.user;
+    if (!req.session.user){
+      name = "Guest";
+    }
+    var updatedArt = await artData.updateReviews(xss(req.params.id),name,req.body.rating,req.body.review);
     res.redirect("/artworks/"+req.params.id);
   } catch (e) {
     res.status(404);

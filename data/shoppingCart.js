@@ -56,6 +56,11 @@ let exportedMethods={
         const cartCollection= await shoppingCart();
         
         const cart=await cartCollection.findOne({userId:newUserID,purchased:0});
+        if(!cart){
+            this.createCart(userID);
+            const newCart=await cartCollection.findOne({userId:newUserID,purchased:0});
+            return newCart;
+        }
         
         return cart;
     },
