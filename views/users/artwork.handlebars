@@ -19,7 +19,11 @@
         {{!-- FORM DOES NOT WORK --}}
         <form method="POST" id="buy-form">
             <label for="buy-form">
-                <button type="submit">Add to Shopping Cart</button>
+                <div id="buyFormat">
+                    <input type="radio" name="format" value="digital" id="digital"><label for="digital">Digital</label>
+                    <input type="radio" name="format" value="print" id="print"><label for="print">Print</label>
+                </div>
+                <button type="button" id="buyButton">Add to Shopping Cart</button>
             </label><br>
         </form>
 
@@ -74,6 +78,7 @@
         <form method="POST" id="review-form">
             <label for="review-form">
                 Leave a Review:<br>
+                {{!-- <input type="text" id="review" name="review"><br> --}}
                 <textarea id="review" name="review" rows="4" cols="50"></textarea><br>
                 <div id="reviewRating">
                     <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label>
@@ -82,7 +87,7 @@
                     <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label>
                     <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label>
                 </div>
-                <button type="submit">Submit Review</button>
+                <button type="buttom" id="reviewButton">Submit Review</button>
             </label><br>
         </form><br>
 

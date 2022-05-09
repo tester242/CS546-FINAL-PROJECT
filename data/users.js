@@ -153,7 +153,7 @@ async function checkUser(username, password) {
         throw 'Error: Either the username or password is invalid.'
     }
 }
-
+//returns 
 async function checkUserLevel(username) {
     checkValidUsername(username);
 

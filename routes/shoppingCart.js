@@ -87,4 +87,15 @@ router.put('/', async (req,res) => {
   }
 });
 
+router.post('/', async (req, res) => {
+  try {
+    var isAdded = await cartData.addArt(xss(req.body.id),req.session.user,xss(req.body.format));
+    console.log("Added to cart");
+    res.redirect("/artworks/"+req.body.id);
+  } catch (e) {
+    res.status(404);
+    res.render('users/artwork', {title: "404 Error", errorExists:true, error: e});
+  }
+});
+
 module.exports = router;
