@@ -9,14 +9,11 @@ const xss = require('xss');
 // GET /
 router.get('/:id', async (req, res) => {
   if (!req.params.id){
-    console("oof");
     res.status(404);
     res.render('users/artwork', {title: "404 Error", error: "No artwork id given"});
   }
   try {
-    console.log("made it");
     const artwork = await artData.getArtwork(req.params.id);
-    console.log(artwork);
     let hasVideo = true;
     let a = Array(10);
     a[0] = artwork["name"];
@@ -46,7 +43,7 @@ router.get('/:id', async (req, res) => {
         a[i] = "N/A";
       }
     }
-    res.render('users/artwork', {title: "artwork",name: a[0], tags: a[1], postedDate: a[2], price: a[3], artImage: a[4], hasVideo: hasVideo, artVideo: a[5], favorites: a[6], overallRating: a[7], description: a[8], reviews: a[9]});
+    res.render('users/artwork', {title: "Artwork",name: a[0], tags: a[1], postedDate: a[2], price: a[3], artImage: a[4], hasVideo: hasVideo, artVideo: a[5], favorites: a[6], overallRating: a[7], description: a[8], reviews: a[9]});
   } catch (e) {
     res.status(404);
     res.render('users/artwork', {title: "404 Error", error: e});

@@ -1,5 +1,6 @@
 const mongoCollections = require('../config/mongoCollections');
 const requests = mongoCollections.requests;
+const notifs = mongoCollections.notifs;
 const users = mongoCollections.users;
 const { ObjectId } = require('mongodb');
 const { getFromUser } = require('./orders');
@@ -127,8 +128,10 @@ module.exports = {
             description: description
         }
 
+
         const insertRequest = await requestCollection.insertOne(newRequest);
         if (insertRequest.insertedCount === 0) throw 'Error: Could not add new request.';
+        notifs.createNotification(userID.toString()+" has put in a commission request");
         return { requestInserted: true };
     },
     /*gets a request from the request collection

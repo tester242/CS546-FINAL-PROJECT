@@ -19,6 +19,15 @@
         <dt>State</dt> <br>
         <dd>{{state}}</dd><br>
 
+        {{#if isAdmin}}
+        <dt>Add Admin</dt>
+        <form method="POST" id="admin-form" action="/profile">
+            <label id="adminUsername" for="adminUsername">Username of Admin you would like to add:</label><br>
+            <input type="text" id="adminUsername" name="adminUsername"><br><br>
+            <button type="submit">Submit</button><br><br><br>
+        </form>
+
+
         {{#unless isAdmin}}
             <dt>Favorites</dt> <br>
             <dd>{{favoritesCount}} Favorited</dd><br>
@@ -84,5 +93,7 @@
 
 
 <footer>
+    {{#if loggedIn}}
     <a href="/logout">Logout</a>
+     {{/if}}
 </footer>

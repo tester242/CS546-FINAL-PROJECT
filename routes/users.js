@@ -64,10 +64,10 @@ const checkValidPassword = function checkValidPassword(str) {
     if (!str) throw 'Error: Password must be provided.';
     if (typeof str != 'string') throw `Error: Passwords must be a string.`;
     if (str.indexOf(' ')!=-1) throw 'Error: Passwords must not contain spaces.';
-    if (str.trim().length < 6) throw `Error: Passwords must be at least 6 characters long. `+str;
+    if (str.trim().length < 6) throw `Error: Passwords must be at least 6 characters long.`;
 }
 
-const checkValidInput = function checkValidInput(username, password,) {
+const checkValidInput = function checkValidInput(username, password) {
     if (!username || !password) throw 'Error: Username and password must be provided.';
     checkValidUsername(username);
     checkValidPassword(password);

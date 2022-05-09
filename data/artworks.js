@@ -39,7 +39,7 @@ function numChecker(num,numName){
 function validateID(id, name){
   if(!id) throw 'must provide an id';
   stringChecker(id,name);
-  if(!ObjectId.isValid(userId)) throw name+' is not a valid Object ID';
+  if(!ObjectId.isValid(id)) throw name+' is not a valid Object ID';
 }
 
 function validateArtwork(name, tags, postedDate, price, artImage, artVideo, favorites, overallRating, description) {
@@ -57,7 +57,6 @@ function validateArtwork(name, tags, postedDate, price, artImage, artVideo, favo
 }
 
 module.exports = {
-  //todo:
   async createArtwork(name, tags, postedDate, price, artImage, artVideo, favorites, overallRating, description, reviews){
     validateArtwork(name, tags, postedDate, price, artImage, artVideo, favorites, overallRating, description);
     
@@ -103,19 +102,49 @@ module.exports = {
     }
   },
 
+  async updateReviews(id, review){
+    var artwork = this.getArtwork(id);
+
+    this.checkReviews([review]);
+
+    var existingReviews = artwork["reviews"];
+    existingReviews.append(review);
+    console.log(existingReviews);
+
+    const updatedArt = {
+      name: artwork["name"],
+      tags: artwork["tags"],
+      postedDate:	artwork["postedDate"],
+      price: artwork["price"],
+      artImage:	artwork["artImage"],
+      artVideo: artwork["artVideo"],
+      favorites: artwork["favorites"],
+      overallRating: artwork["overallRating"],
+      description: artwork["description"],
+      reviews: existingReviews
+    };
+    const updatedInfo = await artCollection.updateOne(
+      { _id: ObjectId(id) },
+      { $set: updatedArt }
+    );
+    if (updatedInfo.modifiedCount === 0) {
+      throw new Error('Could not update reviews successfully');
+    }
+  },
+
   async getArtwork(id){
+    console.log("wait");
     if (!id){
       throw new Error('Id needs to be a valid value');
     }
-    validateID(id,"artworkid");
+    validateID(id.toString(),"artworkid");
+    console.log("got here");
     const artCollection = await artworks();
-    const artList = await artCollection.find({}).toArray();
-    for (artwork of artList){
-      if (artwork["_id"] === id) {
-        return artwork;
-      }
-    }
-    throw new Error('Could not find artwork with given id');
+    const art = await artCollection.findOne({ _id: ObjectId(id) });
+    console.log("what about now");
+    
+    if(!art)throw new Error('Could not find artwork with given id');
+    return art;
   },
 
   async getAllArtworks(){
