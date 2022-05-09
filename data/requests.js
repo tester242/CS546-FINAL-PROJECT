@@ -1,6 +1,6 @@
 const mongoCollections = require('../config/mongoCollections');
 const requests = mongoCollections.requests;
-const notifs = mongoCollections.notifs;
+const notifs = require('./notifications');
 const users = mongoCollections.users;
 const { ObjectId } = require('mongodb');
 const { getFromUser } = require('./orders');

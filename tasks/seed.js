@@ -24,8 +24,4 @@ const main = async() => {
     const request = await requests.createRequest(user._id, 'Test User', 'tester232@gmail.com', '1 Castle Point Terr.', 'Hoboken', 'New Jersey', '07030', 'Portrait of Krispy', 'A portrait of my Pomeranian Husky, Krispy!');
 // commission
     const commission = await commissions.createCommission(request._id, 29.99);
-    console.log('Done seeding database');
-    await db.serverConfig.close();
 };
-
-main().catch(console.log);
