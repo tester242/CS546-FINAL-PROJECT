@@ -4,6 +4,7 @@ const users = data.users;
 const artworks = data.artworks;
 const commissions = data.commissions;
 const requests = data.requests;
+const notifications = data.notifications;
 
 const main = async() => {
     var today = new Date();
@@ -24,4 +25,6 @@ const main = async() => {
     const request = await requests.createRequest(user._id, 'Test User', 'tester232@gmail.com', '1 Castle Point Terr.', 'Hoboken', 'New Jersey', '07030', 'Portrait of Krispy', 'A portrait of my Pomeranian Husky, Krispy!');
 // commission
     const commission = await commissions.createCommission(request._id, 29.99);
+// notification
+    const notification = await notifications.createNotification('The start of notifs');
 };

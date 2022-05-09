@@ -56,12 +56,12 @@ module.exports = {
         const notifCollection = await notifications();
 
         const notification = await notifCollection.find({}).toArray();
-        if(notification === undefined || notification.length > 0){
+        if(notification.length > 0){
             console.log(notification);
             if(notification[0].dateSent!=today){
-                removeAll();
+                this.removeAll();
             }
-            for(let i=0; i<requestList.length;i++){
+            for(let i=0; i<notification.length;i++){
                 notification[i]._id=notification[i]._id.toString();
             }
         }
@@ -92,14 +92,14 @@ module.exports = {
         today = mm + '/' + dd + '/' + yyyy;
 
         const notifCollection = await notifications();
-        const notifications = await notifCollection.find({dateSent:today}).toArray();
+        const list = await notifCollection.find({dateSent:today}).toArray();
 
         
         const removeNotification = await notifCollection.deleteMany({});
 
-        insertNotification.insertedCount=0;
-        for(let i=0;i<notifications.length;i++){
-            insertNotification = await notifCollection.insertOne(notifications[i]);
+        var insertNotification={insertedCount:0};
+        for(let i=0;i<list.length;i++){
+            insertNotification = await notifCollection.insertOne(list[i]);
         }
         if (insertNotification.insertedCount === 0) throw 'Error: Could not add new notification.';
 
