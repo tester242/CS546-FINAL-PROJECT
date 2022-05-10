@@ -72,11 +72,11 @@ router.get('/', async (req, res) => {
             const level = await userData.checkUserLevel(xss(req.session.user));
             if (level) {
                 const orders = await orderData.getFromUser(xss(req.session.user));
-                res.render('users/profile',{loggedIn: true, orders: orders}); // User-view
+                res.render('users/profile',{title: "Orders", loggedIn: true, orders: orders}); // User-view
             } else {
                 const notifs = await notifData.getAll();
                 const orders = await orderData.getAll();
-                res.render('users/orders',{loggedIn: true,isAdmin: true,orders: orders,notifications:notifs}); // Admin-view
+                res.render('users/orders',{title: "Orders", loggedIn: true,isAdmin: true,orders: orders,notifications:notifs}); // Admin-view
             }
         } else {
             res.render('users/login',{loggedIn: true});
