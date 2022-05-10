@@ -50,7 +50,7 @@ router.get('/', async (req, res) => {
             if (level) {
                 res.render('users/profile',{loggedIn: true}); // User-view
             } else {
-                res.render('users/notifications',{loggedIn: true,isAdmin: true,notifications:lister,notifications:true}); // Admin-view
+                res.render('users/notifications',{title:"Notifications",loggedIn: true,isAdmin: true,notifications:lister}); // Admin-view
             }
         } else {
             res.render('users/login',{loggedIn: true});

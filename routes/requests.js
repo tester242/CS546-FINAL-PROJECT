@@ -69,15 +69,16 @@ function validateRequest(name, email, address, city, state, zip, title, descript
 router.get('/', async (req,res) => {
     try {
         if (req.session.user) {
+            const listing= await notifData.getAll();
             const level = await userData.checkUserLevel(req.session.user);
             if (level) {
-                res.render('users/requestForm',{loggedIn: true}); // User-view
+                res.render('users/requestForm',{title: "Request Commission Form", loggedIn: true}); // User-view
             } else {
                 const lister=await requestData.getAll();
-                res.render('users/requests',{requests:lister,loggedIn: true,isAdmin:true}); // Admin-view
+                res.render('users/requests',{title: "Pending Requests", requests:lister,loggedIn: true,isAdmin:true,notifications:listing}); // Admin-view
             }
         } else {
-            res.redirect("/");
+            res.render("users/login", {title: "Please Log In To Put In A Commission"});
         }
     } catch (e) {
         return res.status(400).json(e);
@@ -107,7 +108,8 @@ router.post('/', async (req,res) => {
                 }
             }
         } catch (e) {
-            return res.render('users/requestForm', {error: e, errorExists: true, loggedIn: req.session.user!=null});
+            res.status(400);
+            return res.render('users/requestForm', {title: "400 Error", error: e, errorExists: true, loggedIn: req.session.user!=null});
         }
     }
     else{

@@ -9,6 +9,7 @@ const express = require('express');
 const router = express.Router();
 const data = require('../data');
 const usersData = data.users;
+const notifData=data.notifications;
 const artworkData=data.artworks;
 const orderData=data.orders;
 const requestData=data.requests;
@@ -167,6 +168,7 @@ router.post('/login', async (req, res) => {
 // GET profile page
 router.get('/private', async (req, res) => {
     try {
+        const notifs= await notifData.getAll();
         const level = await usersData.checkUserLevel(req.session.user);
         const user=await usersData.getUser(req.session.user);
         const orders= await orderData.getFromUser(user._id);
@@ -175,7 +177,7 @@ router.get('/private', async (req, res) => {
         res.render('users/profile', {title: "Profile",username: req.session.user, firstName: user.firstName,
         lastName: user.lastName,email: user.email,pronouns: user.pronouns,age:user.age,city:user.city,state:user.state,
         favoritesCount:user.favoritesCount,favoritedArt:user.favoritedArt,loggedIn: req.session.user!=null,isAdmin: level==0,
-        orders:orders,requests:requests, commissions:commissions});
+        orders:orders,requests:requests, commissions:commissions, notifications:notifs});
     } catch (e) {
         res.render('users/profile', {title: "Profile",error: e, errorExists: true,loggedIn: req.session.user!=null,isAdmin:true}); 
     }    

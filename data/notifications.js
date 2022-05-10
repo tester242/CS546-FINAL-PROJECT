@@ -47,7 +47,6 @@ module.exports = {
 
     //gets all the notifications in the system and deletes those not from today
     async getAll() {
-
         var today = new Date();
         var dd = String(today.getDate()).padStart(2, '0');
         var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -57,7 +56,6 @@ module.exports = {
 
         const notification = await notifCollection.find({}).toArray();
         if(notification.length > 0){
-            console.log(notification);
             if(notification[0].dateSent!=today){
                 this.removeAll();
             }
@@ -65,7 +63,7 @@ module.exports = {
                 notification[i]._id=notification[i]._id.toString();
             }
         }
-
+        // console.log(notification);
         return notification;
     },
 

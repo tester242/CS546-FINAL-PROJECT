@@ -48,10 +48,10 @@ router.get('/', async (req, res) => {
       }
       let cartNotEmpty = artThumbnails==[];
 
-      res.render('users/shoppingCart', {cartNotEmpty: cartNotEmpty, artworks: artThumbnails, subtotal: cart.subtotal,loggedIn: true});
+      res.render('users/shoppingCart', {title: "Shopping Cart", cartNotEmpty: cartNotEmpty, artworks: artThumbnails, subtotal: cart.subtotal,loggedIn: true});
     }
     else{
-      res.render('users/login');
+      res.render('users/login',{title:"Please Log In To Buy"});
     }
   } catch (e) {
     res.status(404);

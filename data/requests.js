@@ -1,6 +1,7 @@
 const mongoCollections = require('../config/mongoCollections');
 const requests = mongoCollections.requests;
 const notifs = require('./notifications');
+const usersData = require('./users');
 const users = mongoCollections.users;
 const { ObjectId } = require('mongodb');
 const { getFromUser } = require('./orders');
@@ -110,7 +111,8 @@ module.exports = {
         validateRequest(userID,name, email, address, city, state, zip, title, description);
 
         const requestCollection = await requests();
-        
+        const userCollection = await users();
+        const user = await userCollection.findOne({ _id: userID });
         var today = new Date();
         var dd = String(today.getDate()).padStart(2, '0');
         var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -134,8 +136,8 @@ module.exports = {
 
         const insertRequest = await requestCollection.insertOne(newRequest);
         if (insertRequest.insertedCount === 0) throw 'Error: Could not add new request.';
-        notifs.createNotification(userID.toString()+" has put in a commission request");
-        return { id: insertRequest.insertedRequest, requestInserted: true };
+        notifs.createNotification(user.username+" has put in a commission request");
+        return { id: insertRequest.insertedId, requestInserted: true };
     },
     /*gets a request from the request collection
     @param  requestID: ObejctID

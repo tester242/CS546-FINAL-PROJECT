@@ -4,7 +4,6 @@ const data = require('../data');
 const artworkData = data.artworks;
 const userData = data.users;
 const notifData = data.notifications;
-const commissionData = data.commissions;
 const xss = require('xss');
 
 
@@ -55,12 +54,12 @@ function validateRequest(name, tags, price, artImage, artVideo, description) {
 router.get('/', async (req,res) => {
     try {
         if (req.session.user) {
+            const lister= await notifData.getAll();
             const level = await userData.checkUserLevel(req.session.user);
             if (level) {
                 res.render('users/requestForm',{loggedIn: true}); // User-view
             } else {
-                const notifs=await notifData.getAll();
-                res.render('users/artworkForm',{loggedIn: true,isAdmin:true,notifcations:notifs}); // Admin-view
+                res.render('users/artworkForm',{title:"Add New Artworks",loggedIn: true,isAdmin:true,notifications:lister}); // Admin-view
             }
         } else {
             res.redirect("/");
@@ -92,6 +91,7 @@ router.post('/', async (req,res) => {
                     res.redirect('./requests')
             }
         } catch (e) {
+            res.status(400);
             return res.render('users/artworkForm', {error: e, errorExists: true, loggedIn: req.session.user!=null, isAdmin:true});
         }
     }

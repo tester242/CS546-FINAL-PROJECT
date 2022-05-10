@@ -47,6 +47,9 @@ router.get('/', async (req,res) => {
                 res.render('users/commissions', {title: "Active Commissions", loggedIn: true,isAdmin:true,notifications:notifs});
             }
         }
+        else{
+            res.render('users/login',{title:"Please Log In For Commissions"});
+        }
     } catch (e) {
         return res.status(400).json(e);
     }

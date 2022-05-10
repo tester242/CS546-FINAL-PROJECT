@@ -31,10 +31,6 @@
             onsubmit="onSubmit()"
             onclick="acceptFunction()"
             onclick="rejectFunction()"--}}
-            <form id="request-form" name="request-form" method="POST";>
-                <input type="submit" name="accept" id="accept" value="Accept" >
-                <input type="submit" name="reject" id="reject" value="Reject" >
-            </form> 
             <form method="POST" id="requests-form" action="/requests">
                 <input type="hidden" name="RequestID" value={{this._id}}>
                 <label id="price" for="price">Price</label><br>
