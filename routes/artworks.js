@@ -50,7 +50,7 @@ router.get('/:id', async (req, res) => {
     var level=1;
     if(req.session.user){
       notifs=await notifData.getAll();
-      level=await userData.getUser(req.session.user); 
+      level=await userData.checkUserLevel(req.session.user); 
     }
     const artwork = await artData.getArtwork(xss(req.params.id));
     let hasVideo = true;
