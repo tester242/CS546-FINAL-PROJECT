@@ -135,7 +135,7 @@ module.exports = {
         const insertRequest = await requestCollection.insertOne(newRequest);
         if (insertRequest.insertedCount === 0) throw 'Error: Could not add new request.';
         notifs.createNotification(userID.toString()+" has put in a commission request");
-        return { requestInserted: true };
+        return { id: insertRequest.insertedRequest, requestInserted: true };
     },
     /*gets a request from the request collection
     @param  requestID: ObejctID
